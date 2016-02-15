@@ -1,0 +1,22 @@
+Android studio Java
+
+connexion
+inscription
+GPS detecte resto
+Afficher le menu
+filtre selon allergie et interet
+Afficher un image et detail quand on selectionne un item
+passe commande
+(possibilite) ajouter a la commande
+evaluation du repas (etoile et commentaire par item)
+Payer la commande
+archive la commande (local et BD)
+deconnexion
+
+Baker: l'inscription
+Nadeau: Ajouter a la commande
+Joe: Payer la commande
+Marc: Detail menu
+Pat: Soumettre commande
+Felix: Afficher menu
+Mic: Connexion

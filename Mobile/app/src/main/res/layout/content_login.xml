@@ -7,13 +7,20 @@
     android:fitsSystemWindows="true"
     tools:context="com.example.usager.mobile.LoginActivity">
 
+    <include
+        layout="@layout/toolbar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@android:color/white"
-        android:paddingTop="50dp">
+        android:paddingTop="50dp"
+        tools:context="com.example.usager.mobile.LoginActivity">
+
+
         <TextView
             android:text="Veuillez vous connecter"
             android:textAppearance="?android:attr/textAppearanceLarge"
@@ -54,6 +61,8 @@
             android:layout_width="match_parent"
             android:layout_height="55.5dp"
             android:id="@+id/linearLayout1">
+
+
             <TextView
                 android:text="Créer un nouveau compte"
                 android:textAppearance="?android:attr/textAppearanceSmall"
@@ -76,17 +85,7 @@
                 android:textSize="15sp" />
         </LinearLayout>
     </LinearLayout>
-    <android.support.design.widget.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary" />
-
-    </android.support.design.widget.AppBarLayout>
 
 
 </android.support.design.widget.CoordinatorLayout>

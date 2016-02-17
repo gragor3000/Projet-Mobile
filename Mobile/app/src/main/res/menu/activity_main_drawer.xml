@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_connect"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="Connexion"/>
+
+        <item
+            android:id="@+id/nav_disconnect"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="Déconnexion" />
+
+
+    </group>
+
+    <item
+        android:title="section"
+        android:id="@+id/nav_Section">
+        <menu>
+
+            <item
+                android:id="@+id/nav_test"
+                android:icon="@drawable/ic_menu_gallery"
+                android:title="Voir mes test"/>
+
+        </menu>
+    </item>
+
+</menu>

@@ -21,9 +21,21 @@
         <menu>
 
             <item
-                android:id="@+id/nav_test"
+                android:id="@+id/nav_choixResto"
                 android:icon="@drawable/ic_menu_gallery"
-                android:title="Voir mes test"/>
+                android:title="Choisir un restaurant"/>
+
+            <item
+                android:id="@+id/nav_voirMenu"
+                android:icon="@drawable/ic_menu_gallery"
+                android:title="Commander un plat"/>
+
+            <!--Les commentaires pour le repas en général se fait au même
+                moment qu'on paye la facture.-->
+            <item
+                android:id="@+id/nav_facture"
+                android:icon="@drawable/ic_menu_gallery"
+                android:title="Payer la facture"/>
 
         </menu>
     </item>

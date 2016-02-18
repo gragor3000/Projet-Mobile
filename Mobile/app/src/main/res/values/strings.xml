@@ -2,4 +2,14 @@
     <string name="app_name">Mobile</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="title_meal_list">Meals</string>
+    <string name="title_meal_detail">Meal Detail</string>
+
+    <string name="name_info">"%1$s"</string>
+    <string name="price_info">%1$s$</string>
+    <string name="discount_info">(-%1$s%%) %2$s$</string>
+    <string name="meal_image">Image du repas</string>
+    <string name="description_label">Description</string>
+    <string name="description_info">%1$s</string>
+    <string name="allergies_label">Allergies</string>
 </resources>

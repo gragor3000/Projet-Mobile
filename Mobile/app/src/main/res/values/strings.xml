@@ -12,4 +12,23 @@
     <string name="description_label">Description</string>
     <string name="description_info">%1$s</string>
     <string name="allergies_label">Allergies</string>
+    <string name="title_activity_sign_up">Sign in</string>
+
+    <!-- Strings related to login -->
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="error_invalid_email">This email address is invalid</string>
+    <string name="error_invalid_password">This password is too short</string>
+    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_field_required">This field is required</string>
+    <string name="permission_rationale">"Contacts permissions are needed for providing email
+        completions."
+    </string>
+    <string name="SignUp_First_Name">First Name</string>
+    <string name="SignUp_Last_Name">Last Name</string>
+    <string name="SignUp_Birth">Birth Date</string>
+    <string name="SignUp_Postal">Postal Code</string>
+    <string name="SignUp_Dog_Name">Dog Name</string>
 </resources>

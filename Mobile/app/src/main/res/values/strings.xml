@@ -31,4 +31,10 @@
     <string name="SignUp_Birth">Birth Date</string>
     <string name="SignUp_Postal">Postal Code</string>
     <string name="SignUp_Dog_Name">Dog Name</string>
+
+    <string name ="Login_SignIn">Sign In</string>
+    <string name ="Login_Connect">Please Connect</string>
+    <string name="Login_Create">Create Account</string>
+    <string name="Login_Forget">Forgot your password ?</string>
+
 </resources>

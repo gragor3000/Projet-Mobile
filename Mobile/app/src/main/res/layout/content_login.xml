@@ -22,7 +22,7 @@
 
 
         <TextView
-            android:text="Veuillez vous connecter"
+            android:text="@string/Login_Connect"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -60,7 +60,7 @@
             android:singleLine="true"/>
 
         <Button
-            android:text="Connexion"
+            android:text="@string/Login_SignIn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/btnEnregistrer"
@@ -76,7 +76,7 @@
 
 
             <TextView
-                android:text="Créer un nouveau compte"
+                android:text="@string/Login_Create"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -84,9 +84,10 @@
                 android:id="@+id/CreerCompte"
                 android:gravity="center_horizontal"
                 android:textColor="@android:color/holo_blue_dark"
-                android:textSize="15sp" />
+                android:textSize="15sp"
+                android:onClick="SignUpClick"/>
             <TextView
-                android:text="Mot de passe oublié"
+                android:text="@string/Login_Forget"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

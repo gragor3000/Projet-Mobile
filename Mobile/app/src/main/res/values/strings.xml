@@ -38,4 +38,10 @@
     <string name="Login_Forget">Forgot your password ?</string>
     <string name="title_activity_payer_commande">Payer une commande</string>
 
+
+    <!-- String related to order -->
+    <string name="Order_Next"> Order </string>
+    <string name="Order_End"> Bill </string>
+    <string name="Order_ajouter"> Add </string>
+
 </resources>

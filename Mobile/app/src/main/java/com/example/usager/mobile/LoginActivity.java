@@ -8,9 +8,12 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+
+import java.io.IOException;
 
 public class LoginActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -49,5 +52,9 @@ public class LoginActivity extends AppCompatActivity
     public void SignUpClick(View v) {
         Intent Activity = new Intent(this, SignUpActivity.class);
         startActivity(Activity);
-        }
+    }
+
+    public void SignInClick(View v) {
+        // blablabla ques tu fais à lire ça?????6?
+    }
 }

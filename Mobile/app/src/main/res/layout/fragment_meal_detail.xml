@@ -1,90 +1,110 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/meal_detail"
     style="?android:attr/textAppearanceLarge"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
     android:textIsSelectable="true"
-    tools:context="com.example.usager.mobile.MealDetailFragment" >
+    tools:context="com.example.usager.mobile.MealDetailFragment">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="@string/name_info"
-        android:id="@+id/txtName"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:textStyle="bold" />
+    <FrameLayout
+        android:id="@+id/frameLayout"
+        android:layout_width="250dp"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="@string/price_info"
-        android:id="@+id/txtPrice"
-        android:layout_alignTop="@+id/txtName"
-        android:layout_alignParentEnd="true"
-        android:textStyle="italic" />
+        <include layout="@layout/meal_list" />
+    </FrameLayout>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/discount_info"
-        android:id="@+id/txtDiscount"
-        android:layout_below="@+id/txtPrice"
-        android:layout_alignParentEnd="true"
-        android:textColor="#ff0000"
-        android:textStyle="italic" />
-
-    <ImageView
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        style="?android:attr/textAppearanceLarge"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:id="@+id/imgMeal"
-        android:layout_below="@+id/txtDiscount"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="10dp"
-        android:background="#e0e0e0"
-        android:contentDescription="@string/meal_image" />
+        android:layout_height="match_parent"
+        android:padding="16dp"
+        android:textIsSelectable="true"
+        tools:context="com.example.usager.mobile.MealDetailFragment">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="@string/description_label"
-        android:id="@+id/lblDesc"
-        android:textStyle="bold"
-        android:layout_below="@+id/imgMeal"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="10dp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="@string/name_info"
+            android:id="@+id/txtName"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true"
+            android:textStyle="bold" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/description_info"
-        android:id="@+id/txtDesc"
-        android:layout_below="@+id/lblDesc"
-        android:layout_alignParentStart="true" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="@string/price_info"
+            android:id="@+id/txtPrice"
+            android:layout_alignTop="@+id/txtName"
+            android:layout_alignParentEnd="true"
+            android:textStyle="italic" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="@string/allergies_label"
-        android:id="@+id/txtAllergies"
-        android:layout_below="@+id/txtDesc"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="15dp"
-        android:textStyle="bold" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/discount_info"
+            android:id="@+id/txtDiscount"
+            android:layout_below="@+id/txtPrice"
+            android:layout_alignParentEnd="true"
+            android:textColor="#ff0000"
+            android:textStyle="italic" />
 
-    <ListView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/lstAllergies"
-        android:layout_below="@+id/txtAllergies"
-        android:layout_alignParentStart="true"
-        android:choiceMode="none" />
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:id="@+id/imgMeal"
+            android:layout_below="@+id/txtDiscount"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="10dp"
+            android:background="#e0e0e0"
+            android:contentDescription="@string/meal_image" />
 
-</RelativeLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="@string/description_label"
+            android:id="@+id/lblDesc"
+            android:textStyle="bold"
+            android:layout_below="@+id/imgMeal"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="10dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/description_info"
+            android:id="@+id/txtDesc"
+            android:layout_below="@+id/lblDesc"
+            android:layout_alignParentStart="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="@string/allergies_label"
+            android:id="@+id/txtAllergies"
+            android:layout_below="@+id/txtDesc"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="15dp"
+            android:textStyle="bold" />
+
+        <ListView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/lstAllergies"
+            android:layout_below="@+id/txtAllergies"
+            android:layout_alignParentStart="true"
+            android:choiceMode="none" />
+    </RelativeLayout>
+</LinearLayout>

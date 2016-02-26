@@ -1,26 +1,21 @@
 package com.example.usager.mobile;
 
-import android.content.Intent;
+import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.EditText;
 
-import okhttp3.OkHttpClient;
-
-public class LoginActivity extends AppCompatActivity
+public class PayBillActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_pay_bill);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -47,8 +42,4 @@ public class LoginActivity extends AppCompatActivity
         return true;
     }
 
-    public void SignUpClick(View v) {
-        Intent Activity = new Intent(this, SignUpActivity.class);
-        startActivity(Activity);
-        }
 }

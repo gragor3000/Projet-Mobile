@@ -17,9 +17,8 @@ public class Users {
     public static final String KEY_pw = "pw";
     public static final String KEY_birth = "birth";
     public static final String KEY_postal = "postal";
-    public static final String KEY_dog = "dog";
 
-    // contenu de la table
+
     public int ID;
     public String firstName;
     public String lastName;
@@ -27,5 +26,4 @@ public class Users {
     public String pw;
     public String birth;
     public String postal;
-    public String dog;
 }

@@ -28,4 +28,8 @@ dependencies {
     compile 'com.android.support:support-v4:23.1.1'
     compile 'com.android.support:recyclerview-v7:23.1.1'
     compile 'com.squareup.okhttp3:okhttp:3.2.0'
+    compile 'com.braintreepayments.api:braintree:2.+'
+    compile 'com.braintreepayments.api:drop-in:2.+'
+    compile 'com.paypal.sdk:paypal-android-sdk:2.13.3'
+
 }

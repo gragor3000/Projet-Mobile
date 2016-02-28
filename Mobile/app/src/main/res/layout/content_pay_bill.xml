@@ -27,8 +27,6 @@
         tools:context=".PayBillActivity"
         tools:showIn="@layout/activity_pay_bill">
 
-
-
         <android.support.v4.widget.NestedScrollView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -50,16 +48,14 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Retour" />
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Payer" />
+                android:text="Payer"
+                android:onClick="onBuyPressed"
+                android:drawableLeft="@drawable/ic_launcher"/>
         </LinearLayout>
 
 

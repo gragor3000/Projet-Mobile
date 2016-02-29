@@ -47,15 +47,18 @@
         </activity>
 
 
-        <activity android:name=".OrderActivity"></activity>
-
         <activity
-            android:name=".PayBillActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:name=".OrderActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".PayBillActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+
         </activity>
     </application>
 

@@ -1,5 +1,7 @@
 package com.example.usager.mobile;
 
+import android.app.ListFragment;
+import android.content.Intent;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -7,27 +9,35 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.Layout;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewGroupOverlay;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.List;
 
 public class OrderActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener{
 
-    private List<String[][]> LstRepas = null;
+    //private List<String[][]> LstRepas = null;
+    MealsListFragment VueRepas;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order);
+        VueRepas = new MealsListFragment();
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        AfficherLstRepas();
+
+        /*Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -40,7 +50,7 @@ public class OrderActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);*/
     }
 
 
@@ -56,9 +66,11 @@ public class OrderActivity extends AppCompatActivity
     /*Permet d'afficher la liste de plat à l'usager*/
     private void AfficherLstRepas(){
 
-        ListView Affichage = (ListView) findViewById(R.id.CtnPanier);
+        FrameLayout Conteneur = (FrameLayout) findViewById(R.id.CtnPanier);
 
+        android.widget.Button alpha = (android.widget.Button) findViewById(R.id.AddBtn);
 
+        Conteneur.addView(alpha,10,10);
     }
 
 

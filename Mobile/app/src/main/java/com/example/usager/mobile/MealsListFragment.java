@@ -34,6 +34,58 @@ public class MealsListFragment extends android.support.v4.app.ListFragment {
         values = new String[] { "Iphone", "5"};
         LstRepas.add(values);
 
+        values = new String[] { "Iphone", "5"};
+        LstRepas.add(values);
+
+        values = new String[] { "Iphone", "5"};
+        LstRepas.add(values);
+
+        values = new String[] { "Iphone", "5"};
+        LstRepas.add(values);
+
+        values = new String[] { "Iphone", "5"};
+        LstRepas.add(values);
+
+        values = new String[] { "Iphone", "5"};
+        LstRepas.add(values);
+
+        values = new String[] { "Iphone", "5"};
+        LstRepas.add(values);
+
+        values = new String[] { "Iphone", "5"};
+        LstRepas.add(values);
+
+        values = new String[] { "Iphone", "5"};
+        LstRepas.add(values);
+
+        values = new String[] { "Iphone", "5"};
+        LstRepas.add(values);
+
+        values = new String[] { "Iphone", "5"};
+        LstRepas.add(values);
+
+        values = new String[] { "Iphone", "5"};
+        LstRepas.add(values);
+
+        values = new String[] { "Iphone", "5"};
+        LstRepas.add(values);
+
+        values = new String[] { "Iphone", "5"};
+        LstRepas.add(values);
+
+        values = new String[] { "Iphone", "5"};
+        LstRepas.add(values);
+
+        values = new String[] { "Iphone", "5"};
+        LstRepas.add(values);
+
+        values = new String[] { "Iphone", "5"};
+        LstRepas.add(values);
+
+        values = new String[] { "Iphone", "5"};
+        LstRepas.add(values);
+
+
     }
 
     /*//Permet de récupérer une view liste de ce qui est contenu dans la variable LstRepas
@@ -47,29 +99,16 @@ public class MealsListFragment extends android.support.v4.app.ListFragment {
     }*/
 
     //Permet de récupérer une view liste de ce qui est contenu dans la variable LstRepas
-    public List<String> TousRepasNom(Context contexte, LayoutInflater inflateur, ViewGroup GrVue){
+    public List<String> TousRepas(Context contexte, LayoutInflater inflateur, ViewGroup GrVue){
 
         MealsAdapter adaptateur = new MealsAdapter(contexte, LstRepas);
 
         //ListView NeoListVue = new ListView(contexte);
         List<String> test = new ArrayList<String>();
-        test.add((String) LstRepas.get(0)[0]);
-        test.add((String) LstRepas.get(1)[0]);
-        View salut = adaptateur.getView(0, null, GrVue);
-
-        //NeoListVue.addFooterView(salut);
-
-        return test;
-    }
-
-    public List<String> TousRepasPrix(Context contexte, LayoutInflater inflateur, ViewGroup GrVue){
-
-        MealsAdapter adaptateur = new MealsAdapter(contexte, LstRepas);
-
-        //ListView NeoListVue = new ListView(contexte);
-        List<String> test = new ArrayList<String>();
-        test.add((String) LstRepas.get(0)[1]);
-        test.add((String) LstRepas.get(1)[1]);
+        for (int i=0;i<LstRepas.size();i++)
+        {
+            test.add( LstRepas.get(i)[0] + "\t\t\t\t\t" + LstRepas.get(i)[1]);
+        }
         View salut = adaptateur.getView(0, null, GrVue);
 
         //NeoListVue.addFooterView(salut);

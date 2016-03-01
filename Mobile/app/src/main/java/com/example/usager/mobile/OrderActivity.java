@@ -1,5 +1,8 @@
 package com.example.usager.mobile;
 
+import static com.example.usager.mobile.Constants.FIRST_COLUMN;
+import static com.example.usager.mobile.Constants.SECOND_COLUMN;
+
 import android.app.ListFragment;
 import android.content.Intent;
 import android.graphics.Color;
@@ -27,6 +30,8 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.zip.Inflater;
 
@@ -34,6 +39,7 @@ public class OrderActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener{
 
     //private List<String[][]> LstRepas = null;
+    private ArrayList<HashMap<String,String>> list;
     MealsListFragment VueRepas;
 
     @Override
@@ -73,23 +79,78 @@ public class OrderActivity extends AppCompatActivity
     /*Permet d'afficher la liste de plat à l'usager*/
     private void AfficherLstRepas(){
 
-        ListView Conteneur = (ListView) findViewById(R.id.left);
+        /*ListView Conteneur = (ListView) findViewById(R.id.menu);
 
         LayoutInflater Enfleur = getLayoutInflater().from(Conteneur.getContext());
-        List<String> VueFinal = VueRepas.TousRepasNom(Conteneur.getContext(), Enfleur,
+        List<String> VueFinal = VueRepas.TousRepas(Conteneur.getContext(), Enfleur,
                 (ViewGroup) findViewById(R.id.CtnPanier).getParent());
 
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,VueFinal);
-        Conteneur.setAdapter(arrayAdapter);
+        Conteneur.setAdapter(arrayAdapter);*/
 
-        Conteneur = (ListView) findViewById(R.id.right);
+        ListView listView=(ListView)findViewById(R.id.menu);
+        populateList();
+        ListViewAdapter adapter=new ListViewAdapter(this,list);
+        listView.setAdapter(adapter);
 
-        Enfleur = getLayoutInflater().from(Conteneur.getContext());
-        VueFinal = VueRepas.TousRepasPrix(Conteneur.getContext(), Enfleur,
-                (ViewGroup) findViewById(R.id.CtnPanier).getParent());
 
-        arrayAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,VueFinal);
-        Conteneur.setAdapter(arrayAdapter);
+    }
+
+    private void populateList() {
+        list=new ArrayList<HashMap<String, String>>();
+        HashMap<String,String> temp=new HashMap<String,String>();
+        temp.put(FIRST_COLUMN, "patate");
+        temp.put(SECOND_COLUMN, "10");
+        list.add(temp);
+        list.add(temp);
+        list.add(temp);
+        list.add(temp);
+        list.add(temp);
+        list.add(temp);
+        list.add(temp);
+        list.add(temp);
+        list.add(temp);
+        list.add(temp);
+        list.add(temp);
+        list.add(temp);
+        list.add(temp);
+        list.add(temp);
+        list.add(temp);
+        list.add(temp);
+        list.add(temp);
+        list.add(temp);
+        list.add(temp);
+        list.add(temp);
+        list.add(temp);
+        list.add(temp);
+        list.add(temp);
+        list.add(temp);
+        list.add(temp);
+        list.add(temp);
+        list.add(temp);
+        list.add(temp);
+        list.add(temp);
+        list.add(temp);
+        list.add(temp);
+        list.add(temp);
+        list.add(temp);
+        list.add(temp);
+        list.add(temp);
+        list.add(temp);
+        list.add(temp);
+        list.add(temp);
+        list.add(temp);
+        list.add(temp);
+        list.add(temp);
+        list.add(temp);
+        list.add(temp);
+        list.add(temp);
+        list.add(temp);
+        list.add(temp);
+
+
+
+
 
 
     }

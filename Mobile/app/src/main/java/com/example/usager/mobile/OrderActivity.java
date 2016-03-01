@@ -21,8 +21,10 @@ import android.widget.AbsListView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.List;
@@ -71,15 +73,25 @@ public class OrderActivity extends AppCompatActivity
     /*Permet d'afficher la liste de plat à l'usager*/
     private void AfficherLstRepas(){
 
-        FrameLayout Conteneur = (FrameLayout) findViewById(R.id.CtnPanier);
+        ListView Conteneur = (ListView) findViewById(R.id.left);
 
         LayoutInflater Enfleur = getLayoutInflater().from(Conteneur.getContext());
+        List<String> VueFinal = VueRepas.TousRepasNom(Conteneur.getContext(), Enfleur,
+                (ViewGroup) findViewById(R.id.CtnPanier).getParent());
 
-        View VueFinal = VueRepas.TousRepas(Conteneur.getContext(),Enfleur,
-                                            (ViewGroup) findViewById(R.id.CtnPanier).getParent());
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,VueFinal);
+        Conteneur.setAdapter(arrayAdapter);
 
-        Conteneur.removeAllViews();
-        Conteneur.addView(VueFinal);
+        Conteneur = (ListView) findViewById(R.id.right);
+
+        Enfleur = getLayoutInflater().from(Conteneur.getContext());
+        VueFinal = VueRepas.TousRepasPrix(Conteneur.getContext(), Enfleur,
+                (ViewGroup) findViewById(R.id.CtnPanier).getParent());
+
+        arrayAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,VueFinal);
+        Conteneur.setAdapter(arrayAdapter);
+
+
     }
 
 

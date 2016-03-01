@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.example.usager.mobile.dummy.MealsContent;
 
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Objects;
 import java.util.zip.Inflater;
@@ -35,17 +36,49 @@ public class MealsListFragment extends android.support.v4.app.ListFragment {
 
     }
 
-    //Permet de récupérer une view liste de ce qui est contenu dans la variable LstRepas
+    /*//Permet de récupérer une view liste de ce qui est contenu dans la variable LstRepas
     public View TousRepas(Context contexte, LayoutInflater inflateur, ViewGroup GrVue){
         
         MealsAdapter adaptateur = new MealsAdapter(contexte, LstRepas);
 
         setListAdapter(adaptateur);
-
+        getView(0, null,Gr);
         return inflateur.inflate(R.layout.fragment_meals_list,GrVue,false);
+    }*/
+
+    //Permet de récupérer une view liste de ce qui est contenu dans la variable LstRepas
+    public List<String> TousRepasNom(Context contexte, LayoutInflater inflateur, ViewGroup GrVue){
+
+        MealsAdapter adaptateur = new MealsAdapter(contexte, LstRepas);
+
+        //ListView NeoListVue = new ListView(contexte);
+        List<String> test = new ArrayList<String>();
+        test.add((String) LstRepas.get(0)[0]);
+        test.add((String) LstRepas.get(1)[0]);
+        View salut = adaptateur.getView(0, null, GrVue);
+
+        //NeoListVue.addFooterView(salut);
+
+        return test;
     }
 
-    @Override
+    public List<String> TousRepasPrix(Context contexte, LayoutInflater inflateur, ViewGroup GrVue){
+
+        MealsAdapter adaptateur = new MealsAdapter(contexte, LstRepas);
+
+        //ListView NeoListVue = new ListView(contexte);
+        List<String> test = new ArrayList<String>();
+        test.add((String) LstRepas.get(0)[1]);
+        test.add((String) LstRepas.get(1)[1]);
+        View salut = adaptateur.getView(0, null, GrVue);
+
+        //NeoListVue.addFooterView(salut);
+
+        return test;
+    }
+
+
+    /*@Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
@@ -54,7 +87,7 @@ public class MealsListFragment extends android.support.v4.app.ListFragment {
         // use your custom layout
         MealsAdapter adapter = new MealsAdapter(getContext(), LstRepas);
         setListAdapter(adapter);
-    }
+    }*/
 
     //permet de récupérer un repas contenu dans la liste
     public Object[] GetRepas (int iRepas){

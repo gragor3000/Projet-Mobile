@@ -30,11 +30,14 @@ public class MealsListFragment extends android.support.v4.app.ListFragment {
         LstRepas= new ArrayList<Object[]>();
         String[] values = new String[] { "Android", "10"};
         LstRepas.add(values);
+        values = new String[] { "Iphone", "5"};
+        LstRepas.add(values);
 
     }
 
     //Permet de récupérer une view liste de ce qui est contenu dans la variable LstRepas
     public View TousRepas(Context contexte, LayoutInflater inflateur, ViewGroup GrVue){
+        
         MealsAdapter adaptateur = new MealsAdapter(contexte, LstRepas);
 
         setListAdapter(adaptateur);

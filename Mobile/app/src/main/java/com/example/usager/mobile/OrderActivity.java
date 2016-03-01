@@ -2,6 +2,7 @@ package com.example.usager.mobile;
 
 import android.app.ListFragment;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -10,10 +11,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.Layout;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroupOverlay;
+import android.widget.AbsListView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.FrameLayout;
@@ -22,6 +26,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.List;
+import java.util.zip.Inflater;
 
 public class OrderActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener{
@@ -68,9 +73,13 @@ public class OrderActivity extends AppCompatActivity
 
         FrameLayout Conteneur = (FrameLayout) findViewById(R.id.CtnPanier);
 
-        android.widget.Button alpha = (android.widget.Button) findViewById(R.id.AddBtn);
+        LayoutInflater Enfleur = getLayoutInflater().from(Conteneur.getContext());
 
-        Conteneur.addView(alpha,10,10);
+        View VueFinal = VueRepas.TousRepas(Conteneur.getContext(),Enfleur,
+                                            (ViewGroup) findViewById(R.id.CtnPanier).getParent());
+
+        Conteneur.removeAllViews();
+        Conteneur.addView(VueFinal);
     }
 
 

@@ -4,6 +4,7 @@ import static com.example.usager.mobile.Constants.FIRST_COLUMN;
 import static com.example.usager.mobile.Constants.SECOND_COLUMN;
 
 import android.app.ListFragment;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.support.design.widget.NavigationView;
@@ -36,11 +37,23 @@ import java.util.List;
 import java.util.zip.Inflater;
 
 public class OrderActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener{
+        implements NavigationView.OnNavigationItemSelectedListener {
 
-    //private List<String[][]> LstRepas = null;
-    private ArrayList<HashMap<String,String>> list;
-    MealsListFragment VueRepas;
+    private List<int[]> RepasSelectionner = new ArrayList<int[]>();
+                                                        //Contient les éléments sélectionner
+    private ArrayList<HashMap<String,String>> list;     //Permet L'affichage
+    MealsListFragment VueRepas;                         //Lien vers MealsListFragment
+
+
+    /*******************************************************************8
+     *
+     * To Do 2 Mars:
+     *      -Ajout d'un onClickList qui prend l'indice du repas, avec VueRepas.GetRepas(int)
+     *          pour le placer dans RepasSelectionner
+     *     -Ajout d'un bouton pour augmenter le nombre du repas sélectionner
+     *     -Ajout d'un bouton pour diminuer le nombre de repas sélectionner
+     *     -Modification du onClik de BtnAdd pour afficher la liste de tout les repas
+     */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,21 +92,10 @@ public class OrderActivity extends AppCompatActivity
     /*Permet d'afficher la liste de plat à l'usager*/
     private void AfficherLstRepas(){
 
-        /*ListView Conteneur = (ListView) findViewById(R.id.menu);
-
-        LayoutInflater Enfleur = getLayoutInflater().from(Conteneur.getContext());
-        List<String> VueFinal = VueRepas.TousRepas(Conteneur.getContext(), Enfleur,
-                (ViewGroup) findViewById(R.id.CtnPanier).getParent());
-
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,VueFinal);
-        Conteneur.setAdapter(arrayAdapter);*/
-
         ListView listView=(ListView)findViewById(R.id.menu);
         populateList();
         ListViewAdapter adapter=new ListViewAdapter(this,list);
         listView.setAdapter(adapter);
-
-
     }
 
     private void populateList() {
@@ -147,12 +149,6 @@ public class OrderActivity extends AppCompatActivity
         list.add(temp);
         list.add(temp);
         list.add(temp);
-
-
-
-
-
-
     }
 
 

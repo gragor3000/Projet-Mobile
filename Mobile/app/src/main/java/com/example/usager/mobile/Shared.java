@@ -6,4 +6,5 @@ package com.example.usager.mobile;
 public class Shared {
     public static String username;
     public static String password;
+    public static int restoID;
 }

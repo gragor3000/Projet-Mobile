@@ -33,70 +33,7 @@ public class MealsListFragment extends android.support.v4.app.ListFragment {
         LstRepas.add(values);
         values = new String[] { "Iphone", "5"};
         LstRepas.add(values);
-
-        values = new String[] { "Iphone", "5"};
-        LstRepas.add(values);
-
-        values = new String[] { "Iphone", "5"};
-        LstRepas.add(values);
-
-        values = new String[] { "Iphone", "5"};
-        LstRepas.add(values);
-
-        values = new String[] { "Iphone", "5"};
-        LstRepas.add(values);
-
-        values = new String[] { "Iphone", "5"};
-        LstRepas.add(values);
-
-        values = new String[] { "Iphone", "5"};
-        LstRepas.add(values);
-
-        values = new String[] { "Iphone", "5"};
-        LstRepas.add(values);
-
-        values = new String[] { "Iphone", "5"};
-        LstRepas.add(values);
-
-        values = new String[] { "Iphone", "5"};
-        LstRepas.add(values);
-
-        values = new String[] { "Iphone", "5"};
-        LstRepas.add(values);
-
-        values = new String[] { "Iphone", "5"};
-        LstRepas.add(values);
-
-        values = new String[] { "Iphone", "5"};
-        LstRepas.add(values);
-
-        values = new String[] { "Iphone", "5"};
-        LstRepas.add(values);
-
-        values = new String[] { "Iphone", "5"};
-        LstRepas.add(values);
-
-        values = new String[] { "Iphone", "5"};
-        LstRepas.add(values);
-
-        values = new String[] { "Iphone", "5"};
-        LstRepas.add(values);
-
-        values = new String[] { "Iphone", "5"};
-        LstRepas.add(values);
-
-
     }
-
-    /*//Permet de récupérer une view liste de ce qui est contenu dans la variable LstRepas
-    public View TousRepas(Context contexte, LayoutInflater inflateur, ViewGroup GrVue){
-        
-        MealsAdapter adaptateur = new MealsAdapter(contexte, LstRepas);
-
-        setListAdapter(adaptateur);
-        getView(0, null,Gr);
-        return inflateur.inflate(R.layout.fragment_meals_list,GrVue,false);
-    }*/
 
     //Permet de récupérer une view liste de ce qui est contenu dans la variable LstRepas
     public List<String> TousRepas(Context contexte, LayoutInflater inflateur, ViewGroup GrVue){
@@ -115,18 +52,6 @@ public class MealsListFragment extends android.support.v4.app.ListFragment {
 
         return test;
     }
-
-
-    /*@Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-
-        super.onCreate(savedInstanceState);
-
-        // use your custom layout
-        MealsAdapter adapter = new MealsAdapter(getContext(), LstRepas);
-        setListAdapter(adapter);
-    }*/
 
     //permet de récupérer un repas contenu dans la liste
     public Object[] GetRepas (int iRepas){

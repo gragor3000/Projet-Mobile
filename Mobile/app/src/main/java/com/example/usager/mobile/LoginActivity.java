@@ -36,10 +36,18 @@ public class LoginActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         getSupportActionBar().setHomeButtonEnabled(true);
+
+        //cache les menu non accessibles
+        navigationView.getMenu().getItem(2).setVisible(false);
+        navigationView.getMenu().getItem(2).setVisible(false);
+        navigationView.getMenu().getItem(2).setVisible(false);
+        navigationView.getMenu().getItem(1).setVisible(false);
     }
+
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
+    //onclick des options du menu
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -47,8 +55,10 @@ public class LoginActivity extends AppCompatActivity
         return true;
     }
 
-    public void SignUpClick(View v) {
-        Intent Activity = new Intent(this, SignUpActivity.class);
+    //se log et load la page de choix de resto
+    public void SignInClick(View v) {
+        Intent Activity = new Intent(this, RestoActivity.class);
         startActivity(Activity);
-        }
+
+    }
 }

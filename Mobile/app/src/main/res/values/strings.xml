@@ -43,5 +43,14 @@
     <string name="Order_Next"> Order </string>
     <string name="Order_End"> Bill </string>
     <string name="Order_ajouter"> Add </string>
+    <string name="title_activity_resto">RestoActivity</string>
+
+    <string name="action_settings">Settings</string>
+
+    <!-- String related to Resto -->
+    <string name="Resto_Province"> Province </string>
+    <string name="Resto_City"> City </string>
+    <string name="Resto_Resto"> Restorant </string>
+
 
 </resources>

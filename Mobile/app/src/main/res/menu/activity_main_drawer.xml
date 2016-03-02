@@ -10,7 +10,8 @@
         <item
             android:id="@+id/nav_disconnect"
             android:icon="@drawable/ic_menu_manage"
-            android:title="Déconnexion" />
+            android:title="Déconnexion"
+            />
 
 
     </group>

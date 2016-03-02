@@ -44,6 +44,7 @@ public class OrderActivity extends AppCompatActivity
     private List<int[]> RepasSelectionner = new ArrayList<int[]>();
     //Contient les éléments sélectionner
     private ArrayList<HashMap<String, String>> list;     //Permet L'affichage
+    private ArrayList<HashMap<String, String>> listCommande;
     private int iRepasSelect = -1;                       //Contient l'indice du repas sélectionner
     MealsListFragment VueRepas;                         //Lien vers MealsListFragment
 
@@ -64,8 +65,8 @@ public class OrderActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order);
         VueRepas = new MealsListFragment();
-
-        AfficherLstRepas();
+        listCommande = new ArrayList<HashMap<String, String>>();
+        AfficherLstOrder();
 
         /*Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -91,7 +92,7 @@ public class OrderActivity extends AppCompatActivity
                 /*Si on est en mode ajout, ajoute le repas dans la liste*/
                 if (BtnAjout.getText().toString().equalsIgnoreCase(getString(R.string.Order_Cancel))) {
 
-                    //Ajoute le repas
+                    AjouterRepas(position);
 
                 } else { /*Sinon prend en note l'indice de l'élément sélectionner*/
                     iRepasSelect = position;
@@ -109,13 +110,13 @@ public class OrderActivity extends AppCompatActivity
                 //Si on appuie sur le boutton Pour qu'il passe en mode Ajout, afficher le menu du restaurant
                 if (((Button) vue).getText().toString().equalsIgnoreCase(getString(R.string.Order_Ajouter))) {
 
-                    //A complété
+                    AfficherLstRepas();
 
                     //Renomme le bouton
                     ((Button) vue).setText(getString(R.string.Order_Cancel));
                 } else {//Réaffiche la commande du client
 
-                    //A complété
+                    AfficherLstOrder();
 
                     //Renomme le bouton
                     ((Button) vue).setText(getString(R.string.Order_Ajouter));
@@ -170,48 +171,54 @@ public class OrderActivity extends AppCompatActivity
         listView.setAdapter(adapter);
     }
 
+    private void AfficherLstOrder(){
+        ListView listView = (ListView) findViewById(R.id.menu);
+        ListViewAdapter adapter = new ListViewAdapter(this, listCommande);
+        listView.setAdapter(adapter);
+    }
+
+    // Devra prendre une liste en parametres (commande ou menu)
     private void populateList() {
         list = new ArrayList<HashMap<String, String>>();
         HashMap<String, String> temp = new HashMap<String, String>();
         temp.put(FIRST_COLUMN, "patate");
-        temp.put(SECOND_COLUMN, "10");
+        temp.put(SECOND_COLUMN, "1");
         list.add(temp);
         temp = new HashMap<String, String>();
         temp.put(FIRST_COLUMN, "carotte");
-        temp.put(SECOND_COLUMN, "10");
-        temp = new HashMap<String, String>();
+        temp.put(SECOND_COLUMN, "1");
         list.add(temp);
+        temp = new HashMap<String, String>();
         temp.put(FIRST_COLUMN, "test");
-        temp.put(SECOND_COLUMN, "10");
-        temp = new HashMap<String, String>();
+        temp.put(SECOND_COLUMN, "1");
         list.add(temp);
+        temp = new HashMap<String, String>();
         temp.put(FIRST_COLUMN, "omg");
-        temp.put(SECOND_COLUMN, "10");
-        temp = new HashMap<String, String>();
+        temp.put(SECOND_COLUMN, "1");
         list.add(temp);
+        temp = new HashMap<String, String>();
         temp.put(FIRST_COLUMN, "idk");
-        temp.put(SECOND_COLUMN, "10");
-        temp = new HashMap<String, String>();
+        temp.put(SECOND_COLUMN, "1");
         list.add(temp);
-        temp.put(FIRST_COLUMN, "wtf");
-        temp.put(SECOND_COLUMN, "10");
         temp = new HashMap<String, String>();
+        temp.put(FIRST_COLUMN, "wtf");
+        temp.put(SECOND_COLUMN, "1");
         list.add(temp);
     }
 
     public void PlusClick(View vue){
-        if (iRepasSelect > -1 && iRepasSelect < list.size()) {
+        if (iRepasSelect > -1 && iRepasSelect < listCommande.size()) {
             ListView listView = (ListView) findViewById(R.id.menu);
-            HashMap<String, String> temp = list.get(iRepasSelect);
+            HashMap<String, String> temp = listCommande.get(iRepasSelect);
             String ligne = temp.values().toString();
             String quantite = ligne.substring(ligne.indexOf(",") + 1, ligne.length() - 1);
             String quantitenoblank = quantite.replaceAll("\\s+", "");
             if (Integer.parseInt(quantitenoblank) < 99) {
-                list.remove(iRepasSelect);
+                listCommande.remove(iRepasSelect);
                 Integer quantiteInt = Integer.parseInt(quantitenoblank) + 1;
                 temp.put(SECOND_COLUMN, quantiteInt.toString());
-                list.add(iRepasSelect,temp);
-                ListViewAdapter adapter = new ListViewAdapter(this, list);
+                listCommande.add(iRepasSelect,temp);
+                ListViewAdapter adapter = new ListViewAdapter(this, listCommande);
                 listView.setAdapter(adapter);
             }
         }
@@ -219,21 +226,21 @@ public class OrderActivity extends AppCompatActivity
     }
 
     public void MinusClick(View vue){
-        if (iRepasSelect > -1 && iRepasSelect < list.size()) {
+        if (iRepasSelect > -1 && iRepasSelect < listCommande.size()) {
             ListView listView = (ListView) findViewById(R.id.menu);
-            HashMap<String, String> temp = list.get(iRepasSelect);
+            HashMap<String, String> temp = listCommande.get(iRepasSelect);
 
             String ligne = temp.values().toString();
             String quantite = ligne.substring(ligne.indexOf(",") + 1, ligne.length() - 1);
             String quantitenoblank = quantite.replaceAll("\\s+", "");
             Integer quantiteInt = Integer.parseInt(quantitenoblank) - 1;
-            list.remove(iRepasSelect);
+            listCommande.remove(iRepasSelect);
             if (quantiteInt != 0) {
                 temp.put(SECOND_COLUMN, quantiteInt.toString());
-                list.add(iRepasSelect, temp);
+                listCommande.add(iRepasSelect, temp);
             }
 
-            ListViewAdapter adapter = new ListViewAdapter(this, list);
+            ListViewAdapter adapter = new ListViewAdapter(this, listCommande);
             listView.setAdapter(adapter);
         }
 
@@ -241,11 +248,10 @@ public class OrderActivity extends AppCompatActivity
 
 
     /*Permet d'ajouter un plat à la liste*/
-    private void AjouterRepas(int RepasID){
+    private void AjouterRepas(int iRepas){
 
         //Si l'usager peut ajouter un plat à sa commande
-        if(PeuxAjouter(RepasID)){
-
+        if(PeuxAjouter(list.get(iRepas).get(FIRST_COLUMN))){
 
             //Trouve le bouton de changement de statut
             Button BoutonNext = (Button) findViewById(R.id.NextBtn);
@@ -254,6 +260,9 @@ public class OrderActivity extends AppCompatActivity
             if (BoutonNext.getText().toString().equalsIgnoreCase(getString(R.string.Order_End))) {
 
             }
+
+            /*Puis ajouter l'élément dans la liste*/
+            listCommande.add(list.get(iRepas));
         }
     }
 
@@ -267,20 +276,20 @@ public class OrderActivity extends AppCompatActivity
 
 
     /*Permet de vérifier dans la liste de repas qu'un indice ne s'y trouve pas déjà*/
-    private boolean PeuxAjouter(int RepasID){
+    private boolean PeuxAjouter(String RepasNom){
 
         boolean DejaAjouter = false;
-        /*
+
         //Si la liste n'est pas vide, la parcourrir pour chercher la présence du plat
-        if(LstRepas!=null){
-            for(int iList=0; iList < LstRepas.size(); iList++){
+        if(listCommande!=null){
+            for(int iList=0; iList < listCommande.size(); iList++){
                 if(!DejaAjouter) {
-                    if(LstRepas.get(iList)[0] == RepasID){
+                    if(listCommande.get(iList).get(FIRST_COLUMN) == RepasNom){
                         DejaAjouter = true;
                     }
                 }
             }
-        }               */
+        }
         return !DejaAjouter;
     }
 }

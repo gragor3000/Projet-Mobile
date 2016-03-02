@@ -22,6 +22,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroupOverlay;
 import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.FrameLayout;
@@ -31,6 +32,7 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import java.sql.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -40,19 +42,21 @@ public class OrderActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private List<int[]> RepasSelectionner = new ArrayList<int[]>();
-                                                        //Contient les éléments sélectionner
-    private ArrayList<HashMap<String,String>> list;     //Permet L'affichage
+    //Contient les éléments sélectionner
+    private ArrayList<HashMap<String, String>> list;     //Permet L'affichage
+    private int iRepasSelect = -1;                       //Contient l'indice du repas sélectionner
     MealsListFragment VueRepas;                         //Lien vers MealsListFragment
 
 
-    /*******************************************************************8
-     *
+    /*******************************************************************
+     * 8
+     * <p/>
      * To Do 2 Mars:
-     *      -Ajout d'un onClickList qui prend l'indice du repas, avec VueRepas.GetRepas(int)
-     *          pour le placer dans RepasSelectionner
-     *     -Ajout d'un bouton pour augmenter le nombre du repas sélectionner
-     *     -Ajout d'un bouton pour diminuer le nombre de repas sélectionner
-     *     -Modification du onClik de BtnAdd pour afficher la liste de tout les repas
+     * -Ajout d'un onClickList qui prend l'indice du repas, avec VueRepas.GetRepas(int)
+     * pour le placer dans RepasSelectionner
+     * -Ajout d'un bouton pour augmenter le nombre du repas sélectionner
+     * -Ajout d'un bouton pour diminuer le nombre de repas sélectionner
+     * -Modification du onClik de BtnAdd pour afficher la liste de tout les repas
      */
 
     @Override
@@ -77,6 +81,74 @@ public class OrderActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         getSupportActionBar().setHomeButtonEnabled(true);*/
+        /*Permet l'écoute du clique de l'usager dans la liste*/
+        ListView listView=(ListView)findViewById(R.id.menu);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                android.widget.Button BtnAjout = (android.widget.Button) findViewById(R.id.AddBtn);
+
+                /*Si on est en mode ajout, ajoute le repas dans la liste*/
+                if (BtnAjout.getText().toString().equalsIgnoreCase(getString(R.string.Order_Cancel))) {
+
+                    //Ajoute le repas
+
+                } else { /*Sinon prend en note l'indice de l'élément sélectionner*/
+                    iRepasSelect = position;
+                }
+            }
+        });
+        /*Fin de l'écoute du clique*/
+
+        /*Crée l'écoute pour le bouton ajouter*/
+        Button BtnAjout = (Button) findViewById(R.id.AddBtn);
+        BtnAjout.setOnClickListener(new Button.OnClickListener() {
+            /*Permet d'ajouter un nouveau plat a la commande*/
+            public void onClick(View vue) {
+
+                //Si on appuie sur le boutton Pour qu'il passe en mode Ajout, afficher le menu du restaurant
+                if (((Button) vue).getText().toString().equalsIgnoreCase(getString(R.string.Order_Ajouter))) {
+
+                    //A complété
+
+                    //Renomme le bouton
+                    ((Button) vue).setText(getString(R.string.Order_Cancel));
+                } else {//Réaffiche la commande du client
+
+                    //A complété
+
+                    //Renomme le bouton
+                    ((Button) vue).setText(getString(R.string.Order_Ajouter));
+                }
+            }
+        });
+        /*Fin de l'écoute du bouton ajouter*/
+
+        /*Crée l'écoute pour le bouton Next*/
+        Button BtnNext = (Button) findViewById(R.id.NextBtn);
+        BtnNext.setOnClickListener(new Button.OnClickListener(){
+            /*Permet de passez à la prochaine étape*/
+            public void onClick(View vue) {
+
+                //Si on appuie sur le boutton lorsqu'il est en mode "Commander", passer au prochain mode
+                if (((Button) vue).getText().toString().equalsIgnoreCase(getString(R.string.Order_Next))) {
+
+                    //Envoyer la commande sur le serveur web
+
+                    //Change le text du bouton pour "Bill"
+                    ((Button) vue).setText(getString(R.string.Order_End));
+                } else {//Passez à l'activité pour payer le repas
+
+                    //A complété
+
+                }
+            }
+        });
+        /*Fin de l'écoute du bouton ajouter*/
+
+
+
+
     }
 
 
@@ -90,97 +162,81 @@ public class OrderActivity extends AppCompatActivity
     }
 
     /*Permet d'afficher la liste de plat à l'usager*/
-    private void AfficherLstRepas(){
+    private void AfficherLstRepas() {
 
-        ListView listView=(ListView)findViewById(R.id.menu);
+        ListView listView = (ListView) findViewById(R.id.menu);
         populateList();
-        ListViewAdapter adapter=new ListViewAdapter(this,list);
+        ListViewAdapter adapter = new ListViewAdapter(this, list);
         listView.setAdapter(adapter);
     }
 
     private void populateList() {
-        list=new ArrayList<HashMap<String, String>>();
-        HashMap<String,String> temp=new HashMap<String,String>();
+        list = new ArrayList<HashMap<String, String>>();
+        HashMap<String, String> temp = new HashMap<String, String>();
         temp.put(FIRST_COLUMN, "patate");
         temp.put(SECOND_COLUMN, "10");
         list.add(temp);
+        temp = new HashMap<String, String>();
+        temp.put(FIRST_COLUMN, "carotte");
+        temp.put(SECOND_COLUMN, "10");
+        temp = new HashMap<String, String>();
         list.add(temp);
+        temp.put(FIRST_COLUMN, "test");
+        temp.put(SECOND_COLUMN, "10");
+        temp = new HashMap<String, String>();
         list.add(temp);
+        temp.put(FIRST_COLUMN, "omg");
+        temp.put(SECOND_COLUMN, "10");
+        temp = new HashMap<String, String>();
         list.add(temp);
+        temp.put(FIRST_COLUMN, "idk");
+        temp.put(SECOND_COLUMN, "10");
+        temp = new HashMap<String, String>();
         list.add(temp);
-        list.add(temp);
-        list.add(temp);
-        list.add(temp);
-        list.add(temp);
-        list.add(temp);
-        list.add(temp);
-        list.add(temp);
-        list.add(temp);
-        list.add(temp);
-        list.add(temp);
-        list.add(temp);
-        list.add(temp);
-        list.add(temp);
-        list.add(temp);
-        list.add(temp);
-        list.add(temp);
-        list.add(temp);
-        list.add(temp);
-        list.add(temp);
-        list.add(temp);
-        list.add(temp);
-        list.add(temp);
-        list.add(temp);
-        list.add(temp);
-        list.add(temp);
-        list.add(temp);
-        list.add(temp);
-        list.add(temp);
-        list.add(temp);
-        list.add(temp);
-        list.add(temp);
-        list.add(temp);
-        list.add(temp);
-        list.add(temp);
-        list.add(temp);
-        list.add(temp);
-        list.add(temp);
-        list.add(temp);
-        list.add(temp);
-        list.add(temp);
+        temp.put(FIRST_COLUMN, "wtf");
+        temp.put(SECOND_COLUMN, "10");
+        temp = new HashMap<String, String>();
         list.add(temp);
     }
 
-
-    /*Permet de passez à la prochaine étape*/
-    private void NextStepClick(View vue){
-
-        //Si on appuie sur le boutton lorsqu'il est en mode "Commander", passer au prochain mode
-        if(((android.widget.Button)vue).getText().toString().equalsIgnoreCase(getString(R.string.Order_Next))) {
-
-            //Envoyer la commande sur le serveur web
-
-            //Change le text du bouton pour "Bill"
-            ((android.widget.Button) vue).setText(getString(R.string.Order_End));
+    public void PlusClick(View vue){
+        if (iRepasSelect > -1 && iRepasSelect < list.size()) {
+            ListView listView = (ListView) findViewById(R.id.menu);
+            HashMap<String, String> temp = list.get(iRepasSelect);
+            String ligne = temp.values().toString();
+            String quantite = ligne.substring(ligne.indexOf(",") + 1, ligne.length() - 1);
+            String quantitenoblank = quantite.replaceAll("\\s+", "");
+            if (Integer.parseInt(quantitenoblank) < 99) {
+                list.remove(iRepasSelect);
+                Integer quantiteInt = Integer.parseInt(quantitenoblank) + 1;
+                temp.put(SECOND_COLUMN, quantiteInt.toString());
+                list.add(iRepasSelect,temp);
+                ListViewAdapter adapter = new ListViewAdapter(this, list);
+                listView.setAdapter(adapter);
+            }
         }
-        else{//Passez à l'activité pour payer le repas
 
-            //A complété
-
-        }
     }
 
+    public void MinusClick(View vue){
+        if (iRepasSelect > -1 && iRepasSelect < list.size()) {
+            ListView listView = (ListView) findViewById(R.id.menu);
+            HashMap<String, String> temp = list.get(iRepasSelect);
 
-    /*Permet d'ajouter un nouveau plat a la commande*/
-    private void AddClick(View vue){
+            String ligne = temp.values().toString();
+            String quantite = ligne.substring(ligne.indexOf(",") + 1, ligne.length() - 1);
+            String quantitenoblank = quantite.replaceAll("\\s+", "");
+            Integer quantiteInt = Integer.parseInt(quantitenoblank) - 1;
+            list.remove(iRepasSelect);
+            if (quantiteInt != 0) {
+                temp.put(SECOND_COLUMN, quantiteInt.toString());
+                list.add(iRepasSelect, temp);
+            }
 
-        //Recupère la référence au conteneur en mode paysage
-        View Menu = (View) findViewById(R.id.CtnMenu);
-
-        //Si le menu n'est pas afficher, on se trouve en mode portrait, donc l'afficher
-        if(Menu == null) {
-           // Intent iMenu = new Intent (this, com.example.usager.mobile.) //Appeler le fragment contenant les repas lister
+            ListViewAdapter adapter = new ListViewAdapter(this, list);
+            listView.setAdapter(adapter);
         }
+
     }
 
 

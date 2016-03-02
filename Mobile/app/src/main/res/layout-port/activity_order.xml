@@ -9,7 +9,9 @@
             android:layout_height="wrap_content"
             android:id="@+id/menu"
             android:layout_marginTop="50dp"
-            android:layout_marginBottom="50dp"/>
+            android:layout_marginBottom="50dp"
+            android:drawSelectorOnTop="false"
+            android:listSelector="@android:color/darker_gray"/>
 
     <Button
         style="?android:attr/buttonStyleSmall"
@@ -17,7 +19,6 @@
         android:layout_height="wrap_content"
         android:text="@string/Order_Next"
         android:id="@+id/NextBtn"
-        android:onClick="NextStepClick"
         android:layout_alignParentBottom="true"
         android:layout_alignRight="@+id/AddBtn"
         android:layout_alignEnd="@+id/AddBtn" />
@@ -33,4 +34,25 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/Ordre_Plus"
+        android:id="@+id/PlusBtn"
+        android:onClick="PlusClick"
+        android:layout_alignParentBottom="true"
+        android:layout_toLeftOf="@+id/NextBtn"
+        android:layout_toStartOf="@+id/NextBtn" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/Ordre_Minus"
+        android:onClick="MinusClick"
+        android:id="@+id/MinusBtn"
+        android:layout_alignTop="@+id/PlusBtn"
+        android:layout_toLeftOf="@+id/PlusBtn"
+        android:layout_toStartOf="@+id/PlusBtn" />
+
 </RelativeLayout>

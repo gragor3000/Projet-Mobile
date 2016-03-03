@@ -7,4 +7,5 @@ public class Shared {
     public static String username;
     public static String password;
     public static int restoID;
+    public static int billID;
 }

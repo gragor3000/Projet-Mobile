@@ -14,77 +14,98 @@ import com.example.usager.mobile.dummy.MealsContent;
 
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 import java.util.zip.Inflater;
 
+import static com.example.usager.mobile.Constants.FIRST_COLUMN;
+import static com.example.usager.mobile.Constants.SECOND_COLUMN;
+
 /**
  * Created by Patriack on 2016-02-29.
  */
-public class MealsListFragment extends android.support.v4.app.ListFragment {
+public class MealsListFragment {
 
-    private List<Object[]> LstRepas = null;
+    ArrayList<HashMap<String, String>> MenuResto;
 
-    //Constructeur test de la classe
+    //Constructeur du fragment qui instancie le menu du restaurant
     public MealsListFragment(){
-
-        LstRepas= new ArrayList<Object[]>();
-        String[] values = new String[] { "Android", "10"};
-        LstRepas.add(values);
-        values = new String[] { "Iphone", "5"};
-        LstRepas.add(values);
+        MenuResto = new ArrayList<HashMap<String, String>>();
+        HashMap<String, String> temp = new HashMap<String, String>();
+        temp.put(FIRST_COLUMN, "patate");
+        temp.put(SECOND_COLUMN, "10$");
+        MenuResto.add(temp);
+        temp = new HashMap<String, String>();
+        temp.put(FIRST_COLUMN, "carotte");
+        temp.put(SECOND_COLUMN, "10$");
+        MenuResto.add(temp);
+        temp = new HashMap<String, String>();
+        temp.put(FIRST_COLUMN, "test");
+        temp.put(SECOND_COLUMN, "10$");
+        MenuResto.add(temp);
+        temp = new HashMap<String, String>();
+        temp.put(FIRST_COLUMN, "omg");
+        temp.put(SECOND_COLUMN, "10$");
+        MenuResto.add(temp);
+        temp = new HashMap<String, String>();
+        temp.put(FIRST_COLUMN, "idk");
+        temp.put(SECOND_COLUMN, "10$");
+        MenuResto.add(temp);
+        temp = new HashMap<String, String>();
+        temp.put(FIRST_COLUMN, "wtf");
+        temp.put(SECOND_COLUMN, "10$");
+        MenuResto.add(temp);
     }
 
-    //Permet de récupérer une view liste de ce qui est contenu dans la variable LstRepas
-    public List<String> TousRepas(Context contexte, LayoutInflater inflateur, ViewGroup GrVue){
 
-        MealsAdapter adaptateur = new MealsAdapter(contexte, LstRepas);
-
-        //ListView NeoListVue = new ListView(contexte);
-        List<String> test = new ArrayList<String>();
-        for (int i=0;i<LstRepas.size();i++)
-        {
-            test.add( LstRepas.get(i)[0] + "\t\t\t\t\t" + LstRepas.get(i)[1]);
-        }
-        View salut = adaptateur.getView(0, null, GrVue);
-
-        //NeoListVue.addFooterView(salut);
-
-        return test;
+    // Renvoie le menu en entier
+    public ArrayList<HashMap<String, String>> getMenu() {
+         return MenuResto;
     }
 
-    //permet de récupérer un repas contenu dans la liste
-    public Object[] GetRepas (int iRepas){
-        return LstRepas.get(iRepas);
+
+    // Renvoie qu'en seul repas
+    public HashMap<String, String> getRepas(int iRepas) {
+        return MenuResto.get(iRepas);
     }
 
-    /*Classe permettant d'adapter une liste de repas en listview*/
-    public class MealsAdapter extends ArrayAdapter {
-        private Context context;
-        private List<Object[]> valeur;
 
-        public MealsAdapter(Context context, List<Object[]> values) {
-            super(context, R.layout.fragment_meals_list, values);
-            this.context = context;
-            this.valeur = values;
+    //Renvoie le total que devra débourser l'usager
+    public String getTotal(ArrayList<HashMap<String, String>> LstCommande){
+
+        float PrixTotal = 0.0f;         //Contient le total de la facture
+
+        //Pour tout les repas commandé, additionner le cout au cout total
+        for(int iCommande = 0; iCommande < LstCommande.size(); iCommande++){
+            int iFois = Integer.parseInt(LstCommande.get(iCommande).get(SECOND_COLUMN));
+            Float iPrix = getPrix(LstCommande.get(iCommande).get(FIRST_COLUMN));
+            PrixTotal += (iFois * iPrix);
         }
 
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            LayoutInflater inflater = (LayoutInflater) context
-                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        return (String.valueOf(PrixTotal) + "$");
+    }
 
-            //Crée la vue qui sera une ListView
-            View rowView = inflater.inflate(R.layout.fragment_meals_list, parent, false);
-            //Insère le nom du plat
-            TextView Nom = (TextView) rowView.findViewById(R.id.RepasNom);
-            Nom.setText((String) valeur.get(position)[0]);
-            //Insère le prix du plat
-            TextView Prix = (TextView) rowView.findViewById(R.id.RepasPrix);
-            Prix.setText((String) valeur.get(position)[1]);
 
-            return rowView;
+    //Trouve le prix d'un élément dans la liste grace au nom
+    private float getPrix (String NomRepas){
+
+        int iRepas = 0;
+        float fPrix = 0.0f;
+
+        //Tant qu'il n'a pas trouver le repas, le chercher
+        while (fPrix == 0.0f){
+            //Si on trouve l'élément qu'on cherche
+            if(MenuResto.get(iRepas).get(FIRST_COLUMN) == NomRepas){
+                String StrPrix = MenuResto.get(iRepas).get(SECOND_COLUMN);
+                fPrix = Float.parseFloat(StrPrix.substring(0, StrPrix.length()-1));
+            }
+            else{
+                iRepas++;
+            }
         }
+
+        return fPrix;
     }
 
 }

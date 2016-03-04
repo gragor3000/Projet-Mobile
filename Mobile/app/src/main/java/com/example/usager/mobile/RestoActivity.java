@@ -212,7 +212,7 @@ public class RestoActivity extends AppCompatActivity
             return "Marche Pas";
         }
     }
-
+    //get la ville de la province choisi
     public String GetCities()
     {
         RequestBody formBody = new FormBody.Builder()
@@ -231,6 +231,7 @@ public class RestoActivity extends AppCompatActivity
         }
     }
 
+    //get le resto de la ville choisi
     public String GetResto()
     {
         RequestBody formBody = new FormBody.Builder()

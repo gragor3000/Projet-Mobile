@@ -18,4 +18,6 @@
     <string name="Resto_Province"> Province </string>
     <string name="Resto_City"> Ville </string>
     <string name="Resto_Resto"> Restaurant </string>
+
+    <string name="Resto_Btn"> Confirmer </string>
 </resources>

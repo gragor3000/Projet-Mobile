@@ -55,6 +55,7 @@
     <string name="Resto_Province"> Province </string>
     <string name="Resto_City"> City </string>
     <string name="Resto_Resto"> Restorant </string>
+    <string name="Resto_Btn"> Confirm </string>
 
 
 </resources>

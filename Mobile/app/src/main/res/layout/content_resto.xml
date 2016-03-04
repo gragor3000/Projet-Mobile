@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -38,7 +37,7 @@
                 android:text="@string/Resto_Province" />
 
             <Spinner
-                android:id="@+id/province"
+                android:id="@+id/spProvince"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal" />
@@ -58,7 +57,7 @@
                     android:text="@string/Resto_City" />
 
                 <Spinner
-                    android:id="@+id/city"
+                    android:id="@+id/spCity"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal" />
@@ -78,22 +77,29 @@
                         android:text="@string/Resto_Resto" />
 
                     <Spinner
-                        android:id="@+id/resto"
+                        android:id="@+id/spResto"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal" />
 
-                    <Button
-                        android:layout_width="wrap_content"
+                    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/Resto_Btn"
-                        android:id="@+id/btnResto"
-                        android:layout_gravity="center_horizontal" />
+                        android:layout_alignParentBottom="true"
+                        android:orientation="vertical"
+                        tools:context="com.example.usager.mobile.LoginActivity">
 
+                        <Button
+                            android:id="@+id/btnResto"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentBottom="true"
+                            android:layout_centerHorizontal="true"
+                            android:layout_gravity="center_horizontal"
+                            android:text="@string/Resto_Btn" />
+                    </RelativeLayout>
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
-
-
 </android.support.design.widget.CoordinatorLayout>

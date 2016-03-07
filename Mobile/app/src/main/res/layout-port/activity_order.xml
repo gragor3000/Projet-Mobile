@@ -1,88 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    tools:context="com.example.usager.mobile.LoginActivity">
+    tools:openDrawer="start">
 
     <include
-        layout="@layout/toolbar_layout"
+        layout="@layout/content_order"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="match_parent" />
 
+    <android.support.design.widget.NavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="left|start"
+        android:fitsSystemWindows="true"
+        app:headerLayout="@layout/nav_header_main"
+        app:menu="@menu/activity_main_drawer" />
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <ListView
-            android:id="@+id/menu"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="50dp"
-            android:layout_marginTop="50dp"
-            android:drawSelectorOnTop="false"
-            android:listSelector="@android:color/darker_gray" />
-
-        <Button
-            android:id="@+id/NextBtn"
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignEnd="@+id/AddBtn"
-            android:layout_alignParentBottom="true"
-            android:layout_alignRight="@+id/AddBtn"
-            android:text="@string/Order_Next" />
-
-
-        <Button
-            android:id="@+id/AddBtn"
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginEnd="34dp"
-            android:layout_marginRight="34dp"
-            android:text="@string/Order_ajouter" />
-
-
-        <Button
-            android:id="@+id/PlusBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_toLeftOf="@+id/NextBtn"
-            android:layout_toStartOf="@+id/NextBtn"
-            android:onClick="PlusClick"
-            android:text="@string/Ordre_Plus" />
-
-        <Button
-            android:id="@+id/MinusBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/PlusBtn"
-            android:layout_toLeftOf="@+id/PlusBtn"
-            android:layout_toStartOf="@+id/PlusBtn"
-            android:onClick="MinusClick"
-            android:text="@string/Ordre_Minus" />
-
-        <TextView
-            android:id="@+id/BillTotal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_alignTop="@+id/MinusBtn"
-            android:layout_toLeftOf="@+id/MinusBtn"
-            android:layout_toStartOf="@+id/MinusBtn"
-            android:text="Small Text"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
-
-    </RelativeLayout>
-</android.support.design.widget.CoordinatorLayout>
+</android.support.v4.widget.DrawerLayout>

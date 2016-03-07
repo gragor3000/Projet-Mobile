@@ -71,6 +71,14 @@ public class MealsListFragment {
     }
 
 
+    //renvoie la description d'un repas
+    public String getDescription(int iRepas){
+
+        //A terminer
+
+        return "Description";
+    }
+
     //Renvoie le total que devra débourser l'usager
     public String getTotal(ArrayList<HashMap<String, String>> LstCommande){
 
@@ -83,7 +91,7 @@ public class MealsListFragment {
             PrixTotal += (iFois * iPrix);
         }
 
-        return (String.valueOf(PrixTotal) + "$");
+        return ("Total : " + String.valueOf(PrixTotal) + "$");
     }
 
 

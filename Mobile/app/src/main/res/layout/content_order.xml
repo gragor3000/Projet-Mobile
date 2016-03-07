@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context="com.example.usager.mobile.OrderActivity"
+    android:id="@+id/drawer_layout">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:titleTextColor="@color/textColorPrimary">
+
+    </android.support.v7.widget.Toolbar>
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ListView
+            android:id="@+id/menu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="50dp"
+            android:drawSelectorOnTop="false"
+            android:listSelector="@android:color/darker_gray"
+            android:layout_below="@+id/AddBtn"
+            android:layout_marginTop="10dp" />
+
+        <Button
+            android:id="@+id/NextBtn"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Order_Next"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+
+        <Button
+            android:id="@+id/PlusBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_toLeftOf="@+id/NextBtn"
+            android:layout_toStartOf="@+id/NextBtn"
+            android:onClick="PlusClick"
+            android:text="@string/Ordre_Plus" />
+
+        <Button
+            android:id="@+id/MinusBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/PlusBtn"
+            android:layout_toLeftOf="@+id/PlusBtn"
+            android:layout_toStartOf="@+id/PlusBtn"
+            android:onClick="MinusClick"
+            android:text="@string/Ordre_Minus" />
+
+        <TextView
+            android:id="@+id/BillTotal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignTop="@+id/MinusBtn"
+            android:layout_toLeftOf="@+id/MinusBtn"
+            android:layout_toStartOf="@+id/MinusBtn"
+            android:text="Small Text"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+        <Button
+            android:id="@+id/AddBtn"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Order_Ajouter"
+            android:layout_alignParentTop="true"
+            android:layout_alignRight="@+id/NextBtn"
+            android:layout_alignEnd="@+id/NextBtn" />
+
+    </RelativeLayout>
+
+</android.support.design.widget.CoordinatorLayout>
+
+    <!--<android.support.design.widget.NavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="left|start"
+        android:fitsSystemWindows="true"
+        app:headerLayout="@layout/nav_header_main"
+        app:menu="@menu/activity_main_drawer" />-->

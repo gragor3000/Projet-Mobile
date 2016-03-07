@@ -61,6 +61,7 @@ public class OrderActivity extends AppCompatActivity
         AfficherLstOrder();
         AfficherPrixTotal();
 
+        /*Code consernant le toolbar partager*/
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -75,6 +76,7 @@ public class OrderActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         getSupportActionBar().setHomeButtonEnabled(true);
+        /*Fin code consernant le toolbar partager*/
 
 
         /*Permet l'écoute du clique de l'usager dans la liste*/

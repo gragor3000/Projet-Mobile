@@ -19,5 +19,14 @@
     <string name="Resto_City"> Ville </string>
     <string name="Resto_Resto"> Restaurant </string>
 
+    <!-- String related to order -->
+    <string name="Order_Next"> Envoyer </string>
+    <string name="Order_End"> Facture </string>
+    <string name="Ordre_Plus"> + </string>
+    <string name="Ordre_Minus"> - </string>
+    <string name="Order_Ajouter"> Ajouter </string>
+    <string name="Order_Cancel"> Annuler </string>
+    <string name="Order_Activity"> Commande </string>
+
     <string name="Resto_Btn"> Confirmer </string>
 </resources>

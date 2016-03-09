@@ -31,6 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import okhttp3.FormBody;
+import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
@@ -42,6 +43,7 @@ public class RestoActivity extends AppCompatActivity
 
     //client pour post pi get des données dans BD
     private final OkHttpClient client = new OkHttpClient();
+    public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +75,7 @@ public class RestoActivity extends AppCompatActivity
         List<String> cities = new ArrayList<String>();
         List<String> restos = new ArrayList<String>();
 
-        provinces.add("province1");
+       /* provinces.add("province1");
         provinces.add("province2");
         provinces.add("province3");
         provinces.add("province4");
@@ -91,7 +93,8 @@ public class RestoActivity extends AppCompatActivity
         restos.add("resto3");
         restos.add("resto4");
         restos.add("resto5");
-        restos.add("resto6");
+        restos.add("resto6");*/
+
 
 
         if (android.os.Build.VERSION.SDK_INT > 9) {
@@ -102,6 +105,10 @@ public class RestoActivity extends AppCompatActivity
 
             StrictMode.setThreadPolicy(policy);
         }
+
+        String result = GetProvinces("https://www.google.ca/webhp?hl=fr");
+
+        Toast.makeText(getApplicationContext(),result,Toast.LENGTH_LONG);
 
 
         Spinner provinceSpinner = (Spinner) findViewById(R.id.spProvince);
@@ -196,18 +203,19 @@ public class RestoActivity extends AppCompatActivity
         return true;
     }
 
+
+
     //va chercher la liste de provinces dans la bd
-    public String GetProvinces() {
-        RequestBody formBody = new FormBody.Builder()
-                .build();
+    public String GetProvinces(String url){
         Request request = new Request.Builder()
-                .url("http://192.168.1.112/api/Provinces/GetProvinces")
-                .post(formBody)
+                .url(url)
                 .build();
         try {
             Response response = client.newCall(request).execute();
-            return response.toString();
-        } catch (IOException e) {
+            return response.body().string();
+        }
+        catch (IOException e)
+        {
             e.printStackTrace();
             return "Marche Pas";
         }
@@ -219,12 +227,12 @@ public class RestoActivity extends AppCompatActivity
                 .add("ID", "ProvinceID")
                 .build();
         Request request = new Request.Builder()
-                .url("http://192.168.1.112/api/Cities/GetCities")
+                .url("http://projetwebmobile.azurewebsites.net/api/Cities/GetCities")
                 .post(formBody)
                 .build();
         try {
             Response response = client.newCall(request).execute();
-            return response.toString();
+            return response.body().toString();
         } catch (IOException e) {
             e.printStackTrace();
             return "Marche Pas";
@@ -238,7 +246,7 @@ public class RestoActivity extends AppCompatActivity
                 .add("ID", "RestoID")
                 .build();
         Request request = new Request.Builder()
-                .url("http://192.168.1.112/api/Restaurants/GetRestaurants")
+                .url("http://projetwebmobile.azurewebsites.net/api/Restaurants/GetRestaurants")
                 .post(formBody)
                 .build();
         try {

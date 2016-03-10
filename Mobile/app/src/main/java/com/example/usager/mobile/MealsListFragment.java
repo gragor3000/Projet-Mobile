@@ -3,6 +3,7 @@ package com.example.usager.mobile;
 import android.app.ListFragment;
 import android.content.Context;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,12 +13,22 @@ import android.widget.TextView;
 
 import com.example.usager.mobile.dummy.MealsContent;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 import java.util.zip.Inflater;
+
+import okhttp3.Headers;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 import static com.example.usager.mobile.Constants.FIRST_COLUMN;
 import static com.example.usager.mobile.Constants.SECOND_COLUMN;
@@ -28,11 +39,46 @@ import static com.example.usager.mobile.Constants.SECOND_COLUMN;
 public class MealsListFragment {
 
     ArrayList<HashMap<String, String>> MenuResto;
-
+    private String result = "";
+    private final OkHttpClient client = new OkHttpClient();
     //Constructeur du fragment qui instancie le menu du restaurant
     public MealsListFragment(){
         MenuResto = new ArrayList<HashMap<String, String>>();
-        HashMap<String, String> temp = new HashMap<String, String>();
+        if (android.os.Build.VERSION.SDK_INT > 9) {
+
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
+
+                    .permitAll().build();
+
+            StrictMode.setThreadPolicy(policy);
+        }
+
+        //va chercher les provinces de l'api
+        try {
+            result = GetMenu("http://localhost:52987/api/Meals/getMeals");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+        try {
+            result.trim();
+            result = result.substring(1, result.length() - 1);
+            result = result.replace("\\", "");
+            JSONArray jsonArray = new JSONArray(result);
+            for (int i = 0; i < jsonArray.length(); i++) {
+                HashMap<String, String> temp = new HashMap<String, String>();
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                temp.put(FIRST_COLUMN,jsonObject.optString("Name"));
+                temp.put(SECOND_COLUMN,jsonObject.optString("Price"));
+                //Shared.provinces.add(jsonObject.optString("Name"));
+
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+       /* HashMap<String, String> temp = new HashMap<String, String>();
         temp.put(FIRST_COLUMN, "patate");
         temp.put(SECOND_COLUMN, "10$");
         MenuResto.add(temp);
@@ -55,7 +101,7 @@ public class MealsListFragment {
         temp = new HashMap<String, String>();
         temp.put(FIRST_COLUMN, "wtf");
         temp.put(SECOND_COLUMN, "10$");
-        MenuResto.add(temp);
+        MenuResto.add(temp);*/
     }
 
 
@@ -77,6 +123,24 @@ public class MealsListFragment {
         //A terminer
 
         return "Description";
+    }
+
+    public String GetMenu(String url) throws Exception {
+        Request request = new Request.Builder()
+                .url(url)
+                .build();
+
+
+        Response response = client.newCall(request).execute();
+        if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
+
+        Headers responseHeaders = response.headers();
+        for (int i = 0; i < responseHeaders.size(); i++) {
+            System.out.println(responseHeaders.name(i) + ": " + responseHeaders.value(i));
+        }
+
+        return response.body().string();
+
     }
 
     //Renvoie le total que devra débourser l'usager

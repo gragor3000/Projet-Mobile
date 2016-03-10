@@ -1,7 +1,7 @@
 package com.example.usager.mobile;
 
-import static com.example.usager.mobile.Constants.FIRST_COLUMN;
-import static com.example.usager.mobile.Constants.SECOND_COLUMN;
+import static com.example.usager.mobile.Shared.FIRST_COLUMN;
+import static com.example.usager.mobile.Shared.SECOND_COLUMN;
 import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;

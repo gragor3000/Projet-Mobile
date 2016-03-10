@@ -8,4 +8,6 @@ public class Shared {
     public static String password;
     public static int restoID;
     public static int billID;
+    public static final String FIRST_COLUMN="First";
+    public static final String SECOND_COLUMN="Second";
 }

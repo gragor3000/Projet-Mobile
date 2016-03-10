@@ -12,6 +12,9 @@ import android.widget.TextView;
 
 import com.example.usager.mobile.dummy.MealsContent;
 
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
@@ -19,64 +22,87 @@ import java.util.List;
 import java.util.Objects;
 import java.util.zip.Inflater;
 
-import static com.example.usager.mobile.Constants.FIRST_COLUMN;
-import static com.example.usager.mobile.Constants.SECOND_COLUMN;
+import okhttp3.FormBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+
+import static com.example.usager.mobile.Shared.FIRST_COLUMN;
+import static com.example.usager.mobile.Shared.SECOND_COLUMN;
 
 /**
  * Created by Patriack on 2016-02-29.
  */
 public class MealsListFragment {
 
-    ArrayList<HashMap<String, String>> MenuResto;
+    //Client qui permet d'envoyer et récupérer des informations dans la base de donnée
+    private final OkHttpClient client = new OkHttpClient();
+
+    //Contient toutes les informations du menu du restorant
+    ArrayList<Object[]> MenuResto = new ArrayList<Object[]>();
+
 
     //Constructeur du fragment qui instancie le menu du restaurant
     public MealsListFragment(){
-        MenuResto = new ArrayList<HashMap<String, String>>();
-        HashMap<String, String> temp = new HashMap<String, String>();
-        temp.put(FIRST_COLUMN, "patate");
-        temp.put(SECOND_COLUMN, "10$");
-        MenuResto.add(temp);
-        temp = new HashMap<String, String>();
-        temp.put(FIRST_COLUMN, "carotte");
-        temp.put(SECOND_COLUMN, "10$");
-        MenuResto.add(temp);
-        temp = new HashMap<String, String>();
-        temp.put(FIRST_COLUMN, "test");
-        temp.put(SECOND_COLUMN, "10$");
-        MenuResto.add(temp);
-        temp = new HashMap<String, String>();
-        temp.put(FIRST_COLUMN, "omg");
-        temp.put(SECOND_COLUMN, "10$");
-        MenuResto.add(temp);
-        temp = new HashMap<String, String>();
-        temp.put(FIRST_COLUMN, "idk");
-        temp.put(SECOND_COLUMN, "10$");
-        MenuResto.add(temp);
-        temp = new HashMap<String, String>();
-        temp.put(FIRST_COLUMN, "wtf");
-        temp.put(SECOND_COLUMN, "10$");
-        MenuResto.add(temp);
+
+        /*RequestBody formBody = new FormBody.Builder()
+                .build();
+        Request request = new Request.Builder()
+                .url("http://projetwebmobile.azurewebsites.net/api/MealsControllers/getMeals")
+                .post(formBody)
+                .build();
+        try {
+            Response response = client.newCall(request).execute();
+            test = response.toString();
+        } catch (IOException e) {
+            e.printStackTrace();
+            test = "Marche Pas";
+        }
+
+        String a = test;*/
+
+        Object[] Repas = new Object[3];
+
+        for(int TRepas = 1; TRepas < 31; TRepas++){
+            Repas = new Object[3];
+            Repas[0] = "Repas" + Integer.toString(TRepas);
+            Repas[1] = "10$";
+            Repas[2] = "Il s'agit du repas numéro " + Integer.toString(TRepas);
+            MenuResto.add(Repas);
+        }
     }
 
 
     // Renvoie le menu en entier
     public ArrayList<HashMap<String, String>> getMenu() {
-         return MenuResto;
+
+        ArrayList<HashMap<String, String>> TblRetour = new ArrayList<HashMap<String, String>>();
+
+        for(int TRepas = 0; TRepas < MenuResto.size(); TRepas++){
+            TblRetour.add(getRepas(TRepas));
+        }
+
+         return TblRetour;
     }
 
 
     // Renvoie qu'en seul repas
     public HashMap<String, String> getRepas(int iRepas) {
-        return MenuResto.get(iRepas);
+
+        HashMap<String, String> RepasRetour = new HashMap<String, String>();
+
+        RepasRetour.put(FIRST_COLUMN, (String)MenuResto.get(iRepas)[0]);
+        RepasRetour.put(SECOND_COLUMN, (String)MenuResto.get(iRepas)[1]);
+
+        return RepasRetour;
     }
 
 
     //renvoie la description d'un repas
     public String getDescription(int iRepas){
 
-        //A terminer
-
-        return "Description";
+        return (String)MenuResto.get(iRepas)[2];
     }
 
     //Renvoie le total que devra débourser l'usager
@@ -104,8 +130,8 @@ public class MealsListFragment {
         //Tant qu'il n'a pas trouver le repas, le chercher
         while (fPrix == 0.0f){
             //Si on trouve l'élément qu'on cherche
-            if(MenuResto.get(iRepas).get(FIRST_COLUMN) == NomRepas){
-                String StrPrix = MenuResto.get(iRepas).get(SECOND_COLUMN);
+            if(MenuResto.get(iRepas)[0] == NomRepas){
+                String StrPrix = (String)MenuResto.get(iRepas)[1];
                 fPrix = Float.parseFloat(StrPrix.substring(0, StrPrix.length()-1));
             }
             else{

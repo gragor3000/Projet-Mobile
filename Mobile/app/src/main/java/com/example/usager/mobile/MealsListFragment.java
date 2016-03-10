@@ -32,6 +32,7 @@ import okhttp3.Response;
 
 import static com.example.usager.mobile.Shared.FIRST_COLUMN;
 import static com.example.usager.mobile.Shared.SECOND_COLUMN;
+import static com.example.usager.mobile.Shared.THIRD_COLUMN;
 
 /**
  * Created by Patriack on 2016-02-29.
@@ -70,6 +71,7 @@ public class MealsListFragment {
                 HashMap<String, String> temp = new HashMap<String, String>();
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                 temp.put(FIRST_COLUMN,jsonObject.optString("Name"));
+                temp.put(THIRD_COLUMN,jsonObject.optString("Desc"));
                 temp.put(SECOND_COLUMN,jsonObject.optString("Price"));
                 //Shared.provinces.add(jsonObject.optString("Name"));
 

@@ -11,13 +11,14 @@ public class Shared {
     public static String password;
     public static int restoID;
     public static int billID;
-<<<<<<< HEAD
+
     public static final String FIRST_COLUMN="First";
     public static final String SECOND_COLUMN="Second";
-=======
+    public static final String THIRD_COLUMN="Third";
+
 
     public static List<String> provinces = new ArrayList<String>();
     public static List<String> cities = new ArrayList<String>();
     public static List<String> restos = new ArrayList<String>();
->>>>>>> origin/master
+
 }

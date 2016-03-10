@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -38,13 +39,14 @@ import static com.example.usager.mobile.Shared.SECOND_COLUMN;
  */
 public class MealsListFragment {
 
-    ArrayList<HashMap<String, String>> MenuResto;
+    ArrayList<Object[]> MenuResto;
     private String result = "";
     private final OkHttpClient client = new OkHttpClient();
+
     //Constructeur du fragment qui instancie le menu du restaurant
     public MealsListFragment(){
-        MenuResto = new ArrayList<HashMap<String, String>>();
-        if (android.os.Build.VERSION.SDK_INT > 9) {
+        MenuResto = new ArrayList<Object[]>();
+        /*if (android.os.Build.VERSION.SDK_INT > 9) {
 
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
 
@@ -67,62 +69,61 @@ public class MealsListFragment {
             result = result.replace("\\", "");
             JSONArray jsonArray = new JSONArray(result);
             for (int i = 0; i < jsonArray.length(); i++) {
-                HashMap<String, String> temp = new HashMap<String, String>();
+                Object[] temp = new Object[3];
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
-                temp.put(FIRST_COLUMN,jsonObject.optString("Name"));
-                temp.put(SECOND_COLUMN,jsonObject.optString("Price"));
+                temp[0] = jsonObject.optString("Name");
+                temp[1] = jsonObject.optString("Price");
+                temp[2] = jsonObject.optString("Desc");
                 //Shared.provinces.add(jsonObject.optString("Name"));
-
             }
         } catch (JSONException e) {
             e.printStackTrace();
-        }
+        }*/
 
-       /* HashMap<String, String> temp = new HashMap<String, String>();
-        temp.put(FIRST_COLUMN, "patate");
-        temp.put(SECOND_COLUMN, "10$");
-        MenuResto.add(temp);
-        temp = new HashMap<String, String>();
-        temp.put(FIRST_COLUMN, "carotte");
-        temp.put(SECOND_COLUMN, "10$");
-        MenuResto.add(temp);
-        temp = new HashMap<String, String>();
-        temp.put(FIRST_COLUMN, "test");
-        temp.put(SECOND_COLUMN, "10$");
-        MenuResto.add(temp);
-        temp = new HashMap<String, String>();
-        temp.put(FIRST_COLUMN, "omg");
-        temp.put(SECOND_COLUMN, "10$");
-        MenuResto.add(temp);
-        temp = new HashMap<String, String>();
-        temp.put(FIRST_COLUMN, "idk");
-        temp.put(SECOND_COLUMN, "10$");
-        MenuResto.add(temp);
-        temp = new HashMap<String, String>();
-        temp.put(FIRST_COLUMN, "wtf");
-        temp.put(SECOND_COLUMN, "10$");
-        MenuResto.add(temp);*/
+        for (int i = 0; i < 31; i++) {
+            Object[] temp = new Object[3];
+            temp[0] = "Name "+Integer.toString(i);
+            temp[1] = "Price "+Integer.toString(i);
+            temp[2] = "Desc "+Integer.toString(i);
+            MenuResto.add(temp);
+            //Shared.provinces.add(jsonObject.optString("Name"));
+        }
     }
 
 
     // Renvoie le menu en entier
     public ArrayList<HashMap<String, String>> getMenu() {
-         return MenuResto;
+
+        ArrayList<HashMap<String, String>> Result = new ArrayList<HashMap<String, String>>();
+        HashMap<String, String> temps;
+
+        for(int iRepas = 0; iRepas < MenuResto.size(); iRepas++){
+
+            temps = new HashMap<String, String>();
+            temps.put(FIRST_COLUMN, (String)MenuResto.get(iRepas)[0]);
+            temps.put(SECOND_COLUMN, (String)MenuResto.get(iRepas)[1]);
+            Result.add(temps);
+        }
+
+        return Result;
     }
 
 
     // Renvoie qu'en seul repas
     public HashMap<String, String> getRepas(int iRepas) {
-        return MenuResto.get(iRepas);
+
+        HashMap<String, String> Result = new HashMap<String, String>();
+        Result.put(FIRST_COLUMN, (String)MenuResto.get(iRepas)[0]);
+        Result.put(SECOND_COLUMN, (String)MenuResto.get(iRepas)[1]);
+
+        return Result;
     }
 
 
     //renvoie la description d'un repas
     public String getDescription(int iRepas){
 
-        //A terminer
-
-        return "Description";
+        return (String)MenuResto.get(iRepas)[2];
     }
 
     public String GetMenu(String url) throws Exception {
@@ -168,8 +169,8 @@ public class MealsListFragment {
         //Tant qu'il n'a pas trouver le repas, le chercher
         while (fPrix == 0.0f){
             //Si on trouve l'élément qu'on cherche
-            if(MenuResto.get(iRepas).get(FIRST_COLUMN) == NomRepas){
-                String StrPrix = MenuResto.get(iRepas).get(SECOND_COLUMN);
+            if(MenuResto.get(iRepas)[0] == NomRepas){
+                String StrPrix = (String)MenuResto.get(iRepas)[2];
                 fPrix = Float.parseFloat(StrPrix.substring(0, StrPrix.length()-1));
             }
             else{

@@ -111,7 +111,7 @@ public class RestoActivity extends AppCompatActivity
 
         //va chercher les provinces de l'api
         try {
-            result = GetProvinces("http://projetwebmobile.azurewebsites.net/api/Provinces/GetProvinces");
+            result = GetProvinces("http://projetdeweb.azurewebsites.net/api/Provinces/GetProvinces");
         } catch (Exception e) {
             e.printStackTrace();
         }

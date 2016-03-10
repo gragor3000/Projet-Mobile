@@ -34,8 +34,18 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import okhttp3.FormBody;
+import okhttp3.Headers;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
@@ -43,7 +53,10 @@ import static android.Manifest.permission.READ_CONTACTS;
  * A login screen that offers login via email/password.
  */
 public class SignUpActivity extends AppCompatActivity implements LoaderCallbacks<Cursor>,
-                                        NavigationView.OnNavigationItemSelectedListener {
+        NavigationView.OnNavigationItemSelectedListener {
+
+    private final OkHttpClient client = new OkHttpClient();
+    public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
 
     /**
      * Id to identity READ_CONTACTS permission request.
@@ -203,7 +216,7 @@ public class SignUpActivity extends AppCompatActivity implements LoaderCallbacks
 
         String firstName = txtFirstName.getText().toString();
         String lastName = txtLastName.getText().toString();
-        String birthDate= txtBirthDate.getText().toString();
+        String birthDate = txtBirthDate.getText().toString();
         String postalCode = txtPostalCode.getText().toString();
         String dogName = txtDogName.getText().toString();
 
@@ -230,36 +243,31 @@ public class SignUpActivity extends AppCompatActivity implements LoaderCallbacks
 
         // Regarde si chaque information a été entré
         //prenom
-        if (TextUtils.isEmpty(firstName))
-        {
+        if (TextUtils.isEmpty(firstName)) {
             txtFirstName.setError(getString(R.string.error_field_required));
             focusView = txtFirstName;
             cancel = true;
         }
         //nom de famille
-        if(TextUtils.isEmpty(lastName))
-        {
+        if (TextUtils.isEmpty(lastName)) {
             txtLastName.setError(getString(R.string.error_field_required));
             focusView = txtLastName;
             cancel = true;
         }
         //date de naissance
-        if(TextUtils.isEmpty(birthDate))
-        {
+        if (TextUtils.isEmpty(birthDate)) {
             txtBirthDate.setError(getString(R.string.error_field_required));
             focusView = txtBirthDate;
             cancel = true;
         }
         //adresse postale
-        if(TextUtils.isEmpty(postalCode))
-        {
+        if (TextUtils.isEmpty(postalCode)) {
             txtPostalCode.setError(getString(R.string.error_field_required));
             focusView = txtPostalCode;
             cancel = true;
         }
         //nom de son chien
-        if(TextUtils.isEmpty(dogName))
-        {
+        if (TextUtils.isEmpty(dogName)) {
             txtDogName.setError(getString(R.string.error_field_required));
             focusView = txtDogName;
             cancel = true;
@@ -274,12 +282,38 @@ public class SignUpActivity extends AppCompatActivity implements LoaderCallbacks
             // perform the user login attempt.
             showProgress(true);
             //TODO: Ajouter dans la BD
+            try {
+                SignUpDB(firstName, lastName, birthDate, postalCode, dogName);
+            } catch (Exception ex) {
+            }
+        }
             /*
             mAuthTask = new UserLoginTask(email, password);
             mAuthTask.execute((Void) null);
             */
-        }
     }
+    private String SignUpDB(String firstName, String lastName, String birthDate, String postalCode, String dogName) throws IOException {
+        RequestBody formBody = new FormBody.Builder()
+                .add("firstName", firstName)
+                .add("lastName", lastName)
+                        //information on pas de place dans la BD
+                        //.add("birthDate", birthDate)
+                        //.add("postalCode", postalCode)
+                        //.add("dogName", dogName)
+                .build();
+        Request request = new Request.Builder()
+                .url("http://projetdeweb.azurewebsites.net/api/Provinces/GetProvinces")
+                .post(formBody)
+                .build();
+
+        Response response = client.newCall(request).execute();
+        if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
+
+        System.out.println(response.body().string());
+
+        return response.body().string();
+    }
+
     private boolean isEmailValid(String email) {
         return email.contains("@");
     }
@@ -334,7 +368,7 @@ public class SignUpActivity extends AppCompatActivity implements LoaderCallbacks
                 // Select only email addresses.
                 ContactsContract.Contacts.Data.MIMETYPE +
                         " = ?", new String[]{ContactsContract.CommonDataKinds.Email
-                                                                     .CONTENT_ITEM_TYPE},
+                .CONTENT_ITEM_TYPE},
 
                 // Show primary email addresses first. Note that there won't be
                 // a primary email address if the user hasn't specified one.
@@ -358,15 +392,15 @@ public class SignUpActivity extends AppCompatActivity implements LoaderCallbacks
 
     }
 
-    private interface ProfileQuery {
-        String[] PROJECTION = {
-                ContactsContract.CommonDataKinds.Email.ADDRESS,
-                ContactsContract.CommonDataKinds.Email.IS_PRIMARY,
-        };
+private interface ProfileQuery {
+    String[] PROJECTION = {
+            ContactsContract.CommonDataKinds.Email.ADDRESS,
+            ContactsContract.CommonDataKinds.Email.IS_PRIMARY,
+    };
 
-        int ADDRESS = 0;
-        int IS_PRIMARY = 1;
-    }
+    int ADDRESS = 0;
+    int IS_PRIMARY = 1;
+}
 
 
     private void addEmailsToAutoComplete(List<String> emailAddressCollection) {
@@ -378,61 +412,61 @@ public class SignUpActivity extends AppCompatActivity implements LoaderCallbacks
         mEmailView.setAdapter(adapter);
     }
 
-    /**
-     * Represents an asynchronous login/registration task used to authenticate
-     * the user.
-     */
-    public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
+/**
+ * Represents an asynchronous login/registration task used to authenticate
+ * the user.
+ */
+public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
 
-        private final String mEmail;
-        private final String mPassword;
+    private final String mEmail;
+    private final String mPassword;
 
-        UserLoginTask(String email, String password) {
-            mEmail = email;
-            mPassword = password;
+    UserLoginTask(String email, String password) {
+        mEmail = email;
+        mPassword = password;
+    }
+
+    @Override
+    protected Boolean doInBackground(Void... params) {
+        // TODO: attempt authentication against a network service.
+
+        try {
+            // Simulate network access.
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            return false;
         }
 
-        @Override
-        protected Boolean doInBackground(Void... params) {
-            // TODO: attempt authentication against a network service.
-
-            try {
-                // Simulate network access.
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                return false;
-            }
-
-            for (String credential : DUMMY_CREDENTIALS) {
-                String[] pieces = credential.split(":");
-                if (pieces[0].equals(mEmail)) {
-                    // Account exists, return true if the password matches.
-                    return pieces[1].equals(mPassword);
-                }
-            }
-
-            // TODO: register the new account here.
-            return true;
-        }
-
-        @Override
-        protected void onPostExecute(final Boolean success) {
-            mAuthTask = null;
-            showProgress(false);
-
-            if (success) {
-                finish();
-            } else {
-                mPasswordView.setError(getString(R.string.error_incorrect_password));
-                mPasswordView.requestFocus();
+        for (String credential : DUMMY_CREDENTIALS) {
+            String[] pieces = credential.split(":");
+            if (pieces[0].equals(mEmail)) {
+                // Account exists, return true if the password matches.
+                return pieces[1].equals(mPassword);
             }
         }
 
-        @Override
-        protected void onCancelled() {
-            mAuthTask = null;
-            showProgress(false);
+        // TODO: register the new account here.
+        return true;
+    }
+
+    @Override
+    protected void onPostExecute(final Boolean success) {
+        mAuthTask = null;
+        showProgress(false);
+
+        if (success) {
+            finish();
+        } else {
+            mPasswordView.setError(getString(R.string.error_incorrect_password));
+            mPasswordView.requestFocus();
         }
     }
+
+    @Override
+    protected void onCancelled() {
+        mAuthTask = null;
+        showProgress(false);
+    }
+}
 }
 

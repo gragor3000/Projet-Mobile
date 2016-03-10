@@ -283,7 +283,7 @@ public class SignUpActivity extends AppCompatActivity implements LoaderCallbacks
             showProgress(true);
             //TODO: Ajouter dans la BD
             try {
-                SignUpDB(firstName, lastName, birthDate, postalCode, dogName);
+                SignUpDB(firstName, lastName, password, email, birthDate, postalCode, dogName);
             } catch (Exception ex) {
             }
         }
@@ -292,17 +292,19 @@ public class SignUpActivity extends AppCompatActivity implements LoaderCallbacks
             mAuthTask.execute((Void) null);
             */
     }
-    private String SignUpDB(String firstName, String lastName, String birthDate, String postalCode, String dogName) throws IOException {
+    private String SignUpDB(String firstName, String lastName, String pw, String Email, String birthDate, String postalCode, String dogName) throws IOException {
         RequestBody formBody = new FormBody.Builder()
                 .add("firstName", firstName)
                 .add("lastName", lastName)
+                .add("pw", pw)
+                .add("Email", Email)
                         //information on pas de place dans la BD
                         //.add("birthDate", birthDate)
                         //.add("postalCode", postalCode)
                         //.add("dogName", dogName)
                 .build();
         Request request = new Request.Builder()
-                .url("http://projetdeweb.azurewebsites.net/api/Provinces/GetProvinces")
+                .url("http://projetdeweb.azurewebsites.net/api/Connection/SignUp")
                 .post(formBody)
                 .build();
 

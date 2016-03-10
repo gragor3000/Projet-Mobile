@@ -119,9 +119,26 @@ public class MealsListFragment {
         return Result;
     }
 
+    //renvoie le nom d'un repas en particulier
+    public String getNom(int iRepas){
 
-    //renvoie la description d'un repas
-    public String getDescription(int iRepas){
+        return (String)MenuResto.get(iRepas)[0];
+    }
+
+    //renvoie le prix d'un repas en particulier
+    public String getPrix(int iRepas){
+
+        return (String)MenuResto.get(iRepas)[1];
+    }
+
+    //renvoie la reduction d'un repas en particulier
+    public String getReduc(int iRepas){
+
+        return "Il n'y a pas de réduction";
+    }
+
+    //renvoie la description d'un repas en particulier
+    public String getDescr(int iRepas){
 
         return (String)MenuResto.get(iRepas)[2];
     }

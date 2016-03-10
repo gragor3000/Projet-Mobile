@@ -2,7 +2,6 @@ package com.example.usager.mobile;
 
 import static com.example.usager.mobile.Shared.FIRST_COLUMN;
 import static com.example.usager.mobile.Shared.SECOND_COLUMN;
-import static com.example.usager.mobile.Shared.THIRD_COLUMN;
 import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -49,7 +48,6 @@ public class ListViewAdapter extends BaseAdapter{
     private class ViewHolder{
         TextView txtFirst;
         TextView txtSecond;
-        TextView txtThird;
     }
 
     @Override
@@ -62,7 +60,6 @@ public class ListViewAdapter extends BaseAdapter{
             holder=new ViewHolder();
             holder.txtFirst=(TextView) convertView.findViewById(R.id.TextFirst);
             holder.txtSecond=(TextView) convertView.findViewById(R.id.TextSecond);
-            holder.txtThird=(TextView) convertView.findViewById(R.id.TextThird);
             convertView.setTag(holder);
         }
         else{
@@ -72,7 +69,6 @@ public class ListViewAdapter extends BaseAdapter{
         HashMap<String,String> map=list.get(position);
         holder.txtFirst.setText(map.get(FIRST_COLUMN));
         holder.txtSecond.setText(map.get(SECOND_COLUMN));
-        holder.txtThird.setText(map.get(THIRD_COLUMN));
         return convertView;
     }
 }

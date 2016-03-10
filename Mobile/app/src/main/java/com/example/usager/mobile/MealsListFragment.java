@@ -30,8 +30,8 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-import static com.example.usager.mobile.Constants.FIRST_COLUMN;
-import static com.example.usager.mobile.Constants.SECOND_COLUMN;
+import static com.example.usager.mobile.Shared.FIRST_COLUMN;
+import static com.example.usager.mobile.Shared.SECOND_COLUMN;
 
 /**
  * Created by Patriack on 2016-02-29.

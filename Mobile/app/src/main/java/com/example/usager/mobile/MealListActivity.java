@@ -7,12 +7,12 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import android.support.v7.app.ActionBar;
@@ -38,33 +38,60 @@ public class MealListActivity extends AppCompatActivity {
      */
     private boolean mTwoPane;
 
+    MealsListFragment VueRepas;                         //Lien vers MealsListFragment
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_meal_list);
+        VueRepas = new MealsListFragment();
+
+        /*Remplie la liste avec tout les repas*/
+        ListView listView = (ListView) findViewById(R.id.menu);
+        ListViewAdapter adapter = new ListViewAdapter(this, VueRepas.getMenu());
+        listView.setAdapter(adapter);
+
+        /*Permet l'écoute du clique de l'usager dans la liste*/
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                //Ouvre l'activité pour visualisé la description du repas
+                Intent ActivDescr = new Intent(getApplicationContext(),
+                        com.example.usager.mobile.MealDetailActivity.class);
+                ActivDescr.putExtra("SelectedMeal",position);
+                startActivity(ActivDescr);
+
+            }
+        });
+        /*Fin de l'écoute du clique*/
+
 
         //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         //setSupportActionBar(toolbar);
         //toolbar.setTitle(getTitle());
 
+        /*
         // Show the Up button in the action bar.
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
-        View recyclerView = findViewById(R.id.meal_list);
+        /*View recyclerView = findViewById(R.id.meal_list);
         assert recyclerView != null;
-        setupRecyclerView((RecyclerView) recyclerView);
-
+        setupRecyclerView((RecyclerView) recyclerView);*/
+        /*
         if (findViewById(R.id.meal_detail_container) != null) {
             // The detail container view will be present only in the
             // large-screen layouts (res/values-w900dp).
             // If this view is present, then the
             // activity should be in two-pane mode.
             mTwoPane = true;
-        }
+        }*/
     }
+
+    /*
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -99,7 +126,7 @@ public class MealListActivity extends AppCompatActivity {
         @Override
         public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View view = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.meal_list_content, parent, false);
+                    .inflate(R.layout.content_meal_list, parent, false);
             return new ViewHolder(view);
         }
 
@@ -154,5 +181,5 @@ public class MealListActivity extends AppCompatActivity {
                 return super.toString() + " '" + mContentView.getText() + "'";
             }
         }
-    }
+    }*/
 }

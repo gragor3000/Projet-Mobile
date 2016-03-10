@@ -46,7 +46,7 @@ public class MealsListFragment {
     //Constructeur du fragment qui instancie le menu du restaurant
     public MealsListFragment(){
         MenuResto = new ArrayList<Object[]>();
-        if (android.os.Build.VERSION.SDK_INT > 9) {
+        /*if (android.os.Build.VERSION.SDK_INT > 9) {
 
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
 
@@ -78,32 +78,16 @@ public class MealsListFragment {
             }
         } catch (JSONException e) {
             e.printStackTrace();
-        }
+        }*/
 
-       /* HashMap<String, String> temp = new HashMap<String, String>();
-        temp.put(FIRST_COLUMN, "patate");
-        temp.put(SECOND_COLUMN, "10$");
-        MenuResto.add(temp);
-        temp = new HashMap<String, String>();
-        temp.put(FIRST_COLUMN, "carotte");
-        temp.put(SECOND_COLUMN, "10$");
-        MenuResto.add(temp);
-        temp = new HashMap<String, String>();
-        temp.put(FIRST_COLUMN, "test");
-        temp.put(SECOND_COLUMN, "10$");
-        MenuResto.add(temp);
-        temp = new HashMap<String, String>();
-        temp.put(FIRST_COLUMN, "omg");
-        temp.put(SECOND_COLUMN, "10$");
-        MenuResto.add(temp);
-        temp = new HashMap<String, String>();
-        temp.put(FIRST_COLUMN, "idk");
-        temp.put(SECOND_COLUMN, "10$");
-        MenuResto.add(temp);
-        temp = new HashMap<String, String>();
-        temp.put(FIRST_COLUMN, "wtf");
-        temp.put(SECOND_COLUMN, "10$");
-        MenuResto.add(temp);*/
+        for (int i = 0; i < 31; i++) {
+            Object[] temp = new Object[3];
+            temp[0] = "Name "+Integer.toString(i);
+            temp[1] = "Price "+Integer.toString(i);
+            temp[2] = "Desc "+Integer.toString(i);
+            MenuResto.add(temp);
+            //Shared.provinces.add(jsonObject.optString("Name"));
+        }
     }
 
 

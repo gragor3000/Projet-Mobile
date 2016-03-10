@@ -24,13 +24,19 @@ import android.widget.Toast;
 
 import com.braintreepayments.api.internal.HttpClient;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.security.auth.callback.Callback;
+
 import okhttp3.FormBody;
+import okhttp3.Headers;
+import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
@@ -42,6 +48,8 @@ public class RestoActivity extends AppCompatActivity
 
     //client pour post pi get des données dans BD
     private final OkHttpClient client = new OkHttpClient();
+    private String result = "";
+    public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,11 +77,9 @@ public class RestoActivity extends AppCompatActivity
         navigationView.getMenu().getItem(2).setVisible(true);
         navigationView.getMenu().getItem(1).setVisible(true);
 
-        List<String> provinces = new ArrayList<String>();
-        List<String> cities = new ArrayList<String>();
-        List<String> restos = new ArrayList<String>();
 
-        provinces.add("province1");
+
+      /* provinces.add("province1");
         provinces.add("province2");
         provinces.add("province3");
         provinces.add("province4");
@@ -91,7 +97,7 @@ public class RestoActivity extends AppCompatActivity
         restos.add("resto3");
         restos.add("resto4");
         restos.add("resto5");
-        restos.add("resto6");
+        restos.add("resto6");*/
 
 
         if (android.os.Build.VERSION.SDK_INT > 9) {
@@ -103,12 +109,39 @@ public class RestoActivity extends AppCompatActivity
             StrictMode.setThreadPolicy(policy);
         }
 
+        //va chercher les provinces de l'api
+        try {
+            result = GetProvinces("http://projetwebmobile.azurewebsites.net/api/Provinces/GetProvinces");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        String test = "";
+        try {
+            test = GetCities("http://projetwebmobile.azurewebsites.net/api/Cities/GetCities","2");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+        try {
+            result.trim();
+            result = result.substring(1, result.length() - 1);
+            result = result.replace("\\", "");
+            JSONArray jsonArray = new JSONArray(result);
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                Shared.provinces.add(jsonObject.optString("Name"));
+
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
         Spinner provinceSpinner = (Spinner) findViewById(R.id.spProvince);
 
         //ajoute des provinces random dans la liste pour teste
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(
-                this, android.R.layout.simple_spinner_item, provinces);
+                this, android.R.layout.simple_spinner_item, Shared.provinces);
 
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
@@ -121,12 +154,17 @@ public class RestoActivity extends AppCompatActivity
 
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                villeSpinner.setVisibility(View.VISIBLE);
+                Toast.makeText(getApplicationContext(),"change",Toast.LENGTH_LONG).show();
+                try {
+                    GetCities("http://projetwebmobile.azurewebsites.net/api/Cities/GetCities", "2");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parentView) {
-                villeSpinner.setVisibility(View.INVISIBLE);
+
             }
 
         });
@@ -134,7 +172,7 @@ public class RestoActivity extends AppCompatActivity
         Spinner citySpinner = (Spinner) findViewById(R.id.spCity);
         //ajoute des villes random dans la liste pour teste
         ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(
-                this, android.R.layout.simple_spinner_item, cities);
+                this, android.R.layout.simple_spinner_item, Shared.cities);
 
         adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
@@ -145,6 +183,7 @@ public class RestoActivity extends AppCompatActivity
         citySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
             Spinner restoSpinner = (Spinner) findViewById(R.id.spResto);
+
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 restoSpinner.setVisibility(View.VISIBLE);
@@ -161,7 +200,7 @@ public class RestoActivity extends AppCompatActivity
 
         //ajoute des provinces random dans la liste pour teste
         ArrayAdapter<String> adapter3 = new ArrayAdapter<String>(
-                this, android.R.layout.simple_spinner_item, restos);
+                this, android.R.layout.simple_spinner_item, Shared.restos);
 
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
@@ -196,57 +235,59 @@ public class RestoActivity extends AppCompatActivity
         return true;
     }
 
+
     //va chercher la liste de provinces dans la bd
-    public String GetProvinces() {
-        RequestBody formBody = new FormBody.Builder()
-                .build();
+    public String GetProvinces(String url) throws Exception {
         Request request = new Request.Builder()
-                .url("http://192.168.1.112/api/Provinces/GetProvinces")
-                .post(formBody)
+                .url(url)
                 .build();
-        try {
-            Response response = client.newCall(request).execute();
-            return response.toString();
-        } catch (IOException e) {
-            e.printStackTrace();
-            return "Marche Pas";
+
+
+        Response response = client.newCall(request).execute();
+        if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
+
+        Headers responseHeaders = response.headers();
+        for (int i = 0; i < responseHeaders.size(); i++) {
+            System.out.println(responseHeaders.name(i) + ": " + responseHeaders.value(i));
         }
+
+        return response.body().string();
+
     }
+
     //get la ville de la province choisi
-    public String GetCities()
-    {
+    public String GetCities(String url,String ID) throws IOException {
         RequestBody formBody = new FormBody.Builder()
-                .add("ID", "ProvinceID")
+                .add("ID", ID)
                 .build();
         Request request = new Request.Builder()
-                .url("http://192.168.1.112/api/Cities/GetCities")
+                .url(url)
                 .post(formBody)
                 .build();
-        try {
-            Response response = client.newCall(request).execute();
-            return response.toString();
-        } catch (IOException e) {
-            e.printStackTrace();
-            return "Marche Pas";
-        }
+
+        Response response = client.newCall(request).execute();
+        if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
+
+        System.out.println(response.body().string());
+
+        return response.body().string();
     }
 
     //get le resto de la ville choisi
-    public String GetResto()
-    {
+    public String GetResto() throws IOException {
         RequestBody formBody = new FormBody.Builder()
-                .add("ID", "RestoID")
+                .add("search", "Jurassic Park")
                 .build();
         Request request = new Request.Builder()
-                .url("http://192.168.1.112/api/Restaurants/GetRestaurants")
+                .url("https://en.wikipedia.org/w/index.php")
                 .post(formBody)
                 .build();
-        try {
-            Response response = client.newCall(request).execute();
-            return response.toString();
-        } catch (IOException e) {
-            e.printStackTrace();
-            return "Marche Pas";
-        }
+
+        Response response = client.newCall(request).execute();
+        if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
+
+        System.out.println(response.body().string());
+
+        return response.body().string();
     }
 }

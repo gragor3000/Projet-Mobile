@@ -29,6 +29,11 @@
             <item
                 android:id="@+id/nav_voirMenu"
                 android:icon="@drawable/ic_menu_gallery"
+                android:title="voir le menu en détail"/>
+
+            <item
+                android:id="@+id/nav_voirCommande"
+                android:icon="@drawable/ic_menu_gallery"
                 android:title="Commander un plat"/>
 
             <!--Les commentaires pour le repas en général se fait au même

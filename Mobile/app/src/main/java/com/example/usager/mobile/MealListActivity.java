@@ -65,7 +65,7 @@ public class MealListActivity extends AppCompatActivity
                 //Ouvre l'activité pour visualisé la description du repas
                 Intent ActivDescr = new Intent(getApplicationContext(),
                         com.example.usager.mobile.MealDetailActivity.class);
-                ActivDescr.putExtra("SelectedMeal",position);
+                ActivDescr.putExtra("SelectedMeal", position);
                 startActivity(ActivDescr);
 
             }
@@ -88,128 +88,48 @@ public class MealListActivity extends AppCompatActivity
 
         getSupportActionBar().setHomeButtonEnabled(true);
         /*Fin code consernant le toolbar partager*/
-
-
-        //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        //setSupportActionBar(toolbar);
-        //toolbar.setTitle(getTitle());
-
-        /*
-        // Show the Up button in the action bar.
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-        }
-
-        /*View recyclerView = findViewById(R.id.meal_list);
-        assert recyclerView != null;
-        setupRecyclerView((RecyclerView) recyclerView);*/
-        /*
-        if (findViewById(R.id.meal_detail_container) != null) {
-            // The detail container view will be present only in the
-            // large-screen layouts (res/values-w900dp).
-            // If this view is present, then the
-            // activity should be in two-pane mode.
-            mTwoPane = true;
-        }*/
     }
-
-    /*
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == android.R.id.home) {
-            // This ID represents the Home or Up button. In the case of this
-            // activity, the Up button is shown. Use NavUtils to allow users
-            // to navigate up one level in the application structure. For
-            // more details, see the Navigation pattern on Android Design:
-            //
-            // http://developer.android.com/design/patterns/navigation.html#up-vs-back
-            //
-            NavUtils.navigateUpFromSameTask(this);
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
-        recyclerView.setAdapter(new SimpleItemRecyclerViewAdapter(MealsContent.ITEMS));
-    }
-
-    public class SimpleItemRecyclerViewAdapter
-            extends RecyclerView.Adapter<SimpleItemRecyclerViewAdapter.ViewHolder> {
-
-        private final List<MealsContent.Meal> mValues;
-
-        public SimpleItemRecyclerViewAdapter(List<MealsContent.Meal> items) {
-            mValues = items;
-        }
-
-        @Override
-        public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.content_meal_list, parent, false);
-            return new ViewHolder(view);
-        }
-
-        @Override
-        public void onBindViewHolder(final ViewHolder holder, int position) {
-            holder.mItem = mValues.get(position);
-            holder.mIdView.setText(mValues.get(position).id);
-            holder.mContentView.setText(mValues.get(position).name);
-
-            holder.mView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (mTwoPane) {
-                        Bundle arguments = new Bundle();
-                        arguments.putString(MealDetailFragment.ARG_ITEM_ID, holder.mItem.id);
-                        MealDetailFragment fragment = new MealDetailFragment();
-                        fragment.setArguments(arguments);
-                        getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.meal_detail_container, fragment)
-                                .commit();
-                    } else {
-                        Context context = v.getContext();
-                        Intent intent = new Intent(context, MealDetailActivity.class);
-                        intent.putExtra(MealDetailFragment.ARG_ITEM_ID, holder.mItem.id);
-
-                        context.startActivity(intent);
-                    }
-                }
-            });
-        }
-
-        @Override
-        public int getItemCount() {
-            return mValues.size();
-        }
-
-        public class ViewHolder extends RecyclerView.ViewHolder {
-            public final View mView;
-            public final TextView mIdView;
-            public final TextView mContentView;
-            public MealsContent.Meal mItem;
-
-            public ViewHolder(View view) {
-                super(view);
-                mView = view;
-                mIdView = (TextView) view.findViewById(R.id.id);
-                mContentView = (TextView) view.findViewById(R.id.content);
-            }
-
-            @Override
-            public String toString() {
-                return super.toString() + " '" + mContentView.getText() + "'";
-            }
-        }
-    }*/
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
+        int id = item.getItemId();
+
+        if (id == R.id.nav_connect) {
+            //Ouvre l'activité pour permettre de se connecter
+            Intent ActivConnect = new Intent(getApplicationContext(),
+                    com.example.usager.mobile.LoginActivity.class);
+            startActivity(ActivConnect);
+
+        } else if (id == R.id.nav_disconnect) {
+            //Je sais pas quoi mettre
+
+        }else if (id == R.id.nav_choixResto) {
+            //Ouvre l'activité pour choisir un restaurant
+            Intent ActivResto = new Intent(getApplicationContext(),
+                    com.example.usager.mobile.RestoActivity.class);
+            startActivity(ActivResto);
+
+        } else if (id == R.id.nav_voirMenu) {
+            //Ouvre l'activité pour voir les détail du menu
+            Intent ActivMenu = new Intent(getApplicationContext(),
+                    com.example.usager.mobile.MealListActivity.class);
+            startActivity(ActivMenu);
+
+        } else if (id == R.id.nav_voirCommande) {
+            //Ouvre l'activité pour voir les détail du menu
+            Intent ActivCommander = new Intent(getApplicationContext(),
+                    com.example.usager.mobile.OrderActivity.class);
+            startActivity(ActivCommander);
+
+        } else if (id == R.id.nav_facture) {
+            //Ouvre l'activité pour voir les détail du menu
+            Intent ActivFacture = new Intent(getApplicationContext(),
+                    com.example.usager.mobile.PayBillActivity.class);
+            startActivity(ActivFacture);
+        }
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;

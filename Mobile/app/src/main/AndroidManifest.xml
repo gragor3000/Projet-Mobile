@@ -38,6 +38,7 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.usager.mobile.MainActivity" />
@@ -60,6 +61,8 @@
             android:name=".OrderActivity"
             android:label="@string/Order_Activity"
             android:theme="@style/AppTheme.NoActionBar">
+
+
         </activity>
 
         <activity

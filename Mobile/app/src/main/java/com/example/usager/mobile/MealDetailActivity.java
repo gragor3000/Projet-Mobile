@@ -21,7 +21,8 @@ import android.widget.TextView;
  * item details are presented side-by-side with a list of items
  * in a {@link MealListActivity}.
  */
-public class MealDetailActivity extends AppCompatActivity {
+public class MealDetailActivity extends AppCompatActivity
+        implements NavigationView.OnNavigationItemSelectedListener{
 
     MealsListFragment VueRepas;                         //Lien vers MealsListFragment
 
@@ -30,6 +31,23 @@ public class MealDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_meal_detail);
         VueRepas = new MealsListFragment();
+
+        /*Code consernant le toolbar partager*/
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.setDrawerListener(toggle);
+        toolbar.setTitleTextColor(getResources().getColor(R.color.textColorPrimary));
+        toggle.syncState();
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+
+        getSupportActionBar().setHomeButtonEnabled(true);
+        /*Fin code consernant le toolbar partager*/
 
         //Récupère les informations envoyer par la page qui la invoquer
         Bundle invocation = getIntent().getExtras();
@@ -90,4 +108,13 @@ public class MealDetailActivity extends AppCompatActivity {
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }*/
+
+    @SuppressWarnings("StatementWithEmptyBody")
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        // Handle navigation view item clicks here.
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
+    }
 }

@@ -4,9 +4,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.NavUtils;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,7 +35,8 @@ import java.util.List;
  * item details. On tablets, the activity presents the list of items and
  * item details side-by-side using two vertical panes.
  */
-public class MealListActivity extends AppCompatActivity {
+public class MealListActivity extends AppCompatActivity
+        implements NavigationView.OnNavigationItemSelectedListener{
 
     /**
      * Whether or not the activity is in two-pane mode, i.e. running on a tablet
@@ -65,6 +71,23 @@ public class MealListActivity extends AppCompatActivity {
             }
         });
         /*Fin de l'écoute du clique*/
+
+        /*Code consernant le toolbar partager*/
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.setDrawerListener(toggle);
+        toolbar.setTitleTextColor(getResources().getColor(R.color.textColorPrimary));
+        toggle.syncState();
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+
+        getSupportActionBar().setHomeButtonEnabled(true);
+        /*Fin code consernant le toolbar partager*/
 
 
         //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -182,4 +205,13 @@ public class MealListActivity extends AppCompatActivity {
             }
         }
     }*/
+
+    @SuppressWarnings("StatementWithEmptyBody")
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        // Handle navigation view item clicks here.
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
+    }
 }

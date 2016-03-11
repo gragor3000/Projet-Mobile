@@ -50,6 +50,7 @@ public class RestoActivity extends AppCompatActivity
     //client pour post pi get des données dans BD
     private final OkHttpClient client = new OkHttpClient();
     private String result = "";
+    private String cityResult = "";
     public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
 
     @Override
@@ -73,10 +74,12 @@ public class RestoActivity extends AppCompatActivity
         getSupportActionBar().setHomeButtonEnabled(true);
 
         //affiche les menu accessibles
-        navigationView.getMenu().getItem(2).setVisible(true);
-        navigationView.getMenu().getItem(2).setVisible(true);
-        navigationView.getMenu().getItem(2).setVisible(true);
-        navigationView.getMenu().getItem(1).setVisible(true);
+        navigationView.getMenu().getItem(0).setVisible(false);
+        navigationView.getMenu().getItem(2).setVisible(false);
+        // navigationView.getMenu().getItem(2).setVisible(false);
+        //navigationView.getMenu().getItem(1).setVisible(true);
+        //  navigationView.getMenu().getItem(2).setVisible(true);
+        // navigationView.getMenu().getItem(1).setVisible(true);
 
 
 
@@ -118,7 +121,7 @@ public class RestoActivity extends AppCompatActivity
         }
         String test = "";
         try {
-            test = GetCities("http://projetwebmobile.azurewebsites.net/api/Cities/GetCities","2");
+            cityResult = GetCities("http://projetwebmobile.azurewebsites.net/api/Cities/GetCities","1");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -139,8 +142,7 @@ public class RestoActivity extends AppCompatActivity
         }
 
         Spinner provinceSpinner = (Spinner) findViewById(R.id.spProvince);
-
-        //ajoute des provinces random dans la liste pour teste
+        //ajoute les provinces dans spinner
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(
                 this, android.R.layout.simple_spinner_item, Shared.provinces);
 
@@ -157,7 +159,7 @@ public class RestoActivity extends AppCompatActivity
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 Toast.makeText(getApplicationContext(),"change",Toast.LENGTH_LONG).show();
                 try {
-                    GetCities("http://projetwebmobile.azurewebsites.net/api/Cities/GetCities", "2");
+                    GetCities("http://projetdeweb.azurewebsites.net/api/Cities/getCities", "1");
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -170,8 +172,22 @@ public class RestoActivity extends AppCompatActivity
 
         });
 
+        try {
+            cityResult.trim();
+            cityResult = cityResult.substring(1, cityResult.length() - 1);
+            cityResult = cityResult.replace("\\", "");
+            JSONArray jsonArray = new JSONArray(cityResult);
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                Shared.cities.add(jsonObject.optString("Name"));
+
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
         Spinner citySpinner = (Spinner) findViewById(R.id.spCity);
-        //ajoute des villes random dans la liste pour teste
+        //ajoute des villes dans spinner
         ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(
                 this, android.R.layout.simple_spinner_item, Shared.cities);
 

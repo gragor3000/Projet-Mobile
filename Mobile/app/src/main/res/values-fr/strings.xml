@@ -28,6 +28,7 @@
     <string name="Order_Ajouter"> Ajouter </string>
     <string name="Order_Cancel"> Annuler </string>
     <string name="Order_Activity"> Commande </string>
+    <string name="Order_Waiter"> Appeler serveur </string>
 
     <string name="Resto_Btn"> Confirmer </string>
 

@@ -122,6 +122,18 @@ public class OrderActivity extends AppCompatActivity
         });
         /*Fin de l'écoute du bouton ajouter*/
 
+        /*Crée l'écoute pour le bouton pour appeler le serveur*/
+        final Button BtnWaiter = (Button) findViewById(R.id.WaiterBtn);
+        BtnWaiter.setOnClickListener(new Button.OnClickListener() {
+            /*Permet d'ajouter un nouveau plat a la commande*/
+            public void onClick(View vue) {
+
+                //Le bouton change de couleur pour dire que le serveur à été appelé.
+                BtnWaiter.setBackgroundColor(0x009933);
+            }
+        });
+        /*Fin de l'écoute du bouton ajouter*/
+
         /*Crée l'écoute pour le bouton Next*/
         Button BtnNext = (Button) findViewById(R.id.NextBtn);
         BtnNext.setOnClickListener(new Button.OnClickListener(){

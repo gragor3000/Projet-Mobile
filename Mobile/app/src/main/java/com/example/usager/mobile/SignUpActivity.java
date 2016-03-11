@@ -361,7 +361,7 @@ public class SignUpActivity extends AppCompatActivity implements LoaderCallbacks
         Response response = client.newCall(request).execute();
         if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
 
-        System.out.println(response.body().string());
+        //System.out.println(response.body().string());
 
         return response.body().string();
     }

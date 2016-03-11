@@ -361,6 +361,8 @@ public class RestoActivity extends AppCompatActivity
                 Shared.restoID = Shared.restosID.get(i);
             }
         }
+        Intent Activity = new Intent(getApplicationContext(), OrderActivity.class);
+        startActivity(Activity);
     }
 
 }

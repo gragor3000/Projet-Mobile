@@ -105,7 +105,7 @@ public class LoginActivity extends AppCompatActivity
         try {
             if (Shared.username.toString().equals("jonathanclavetg@gmail.com") && Shared.password.toString().equals("123"))
             {
-                Intent Activity = new Intent(this, RestoActivity.class);
+                Intent Activity = new Intent(getApplicationContext(), RestoActivity.class);
                 startActivity(Activity);
 
             }

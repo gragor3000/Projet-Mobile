@@ -12,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.IOException;
@@ -95,22 +96,30 @@ public class LoginActivity extends AppCompatActivity
     }
 
     //se log et load la page de choix de resto
-    public int SignInClick(View v) throws IOException {
+    public void SignInClick(View v) throws IOException {
         Shared.username = new String();
-        Shared.username = "jonathanclavetg@gmail.com";
+        Shared.username = ((TextView)findViewById(R.id.Login_Email)).getText().toString();
         Shared.password = new String();
-        Shared.password = "123";
-        String test = "";
-        try {
-            test = Shared.UserMatch();
-            //test contient du JSON "{"Rights":3}"
-            return Integer.parseInt(test);
-        } catch (Exception ex) { }
-        //Intent Activity = new Intent(this, RestoActivity.class);
-        //startActivity(Activity);
+        Shared.password = ((TextView)findViewById(R.id.password)).getText().toString();
 
-        Toast.makeText(getApplicationContext(), test,Toast.LENGTH_LONG).show();
-        return -1;
+        try {
+            if (Shared.username.toString().equals("jonathanclavetg@gmail.com") && Shared.password.toString().equals("123"))
+            {
+                Intent Activity = new Intent(this, RestoActivity.class);
+                startActivity(Activity);
+
+            }
+            else
+            {
+                Toast.makeText(getApplicationContext(), "Mauvais utilisateur et/ou mot de passe!",Toast.LENGTH_LONG).show();
+            }
+            /*else
+            {
+                Toast.makeText(getApplicationContext(), "Vous n'êtes pas un client criss d'attardé",Toast.LENGTH_LONG).show();
+            }*/
+        } catch (Exception ex) { }
+
+
     }
 
     //appel la page d'inscription

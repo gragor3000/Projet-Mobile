@@ -2,6 +2,10 @@ package com.example.usager.mobile;
 
 import android.os.StrictMode;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +34,7 @@ public class Shared {
     public static List<String> restos = new ArrayList<String>();
     public static List<Integer> restosID = new ArrayList<Integer>();
 
-    public static String UserMatch() throws IOException {
+    public static int UserMatch() throws IOException, JSONException {
         if (android.os.Build.VERSION.SDK_INT > 9) {
 
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
@@ -56,6 +60,13 @@ public class Shared {
 
         System.out.println(response.body().string());
 
-        return response.body().string();
+        int Rights = -1;
+        JSONArray jsonArray = new JSONArray(response.body().string());
+        for (int i = 0; i < jsonArray.length(); i++) {
+            JSONObject jsonObject = jsonArray.getJSONObject(i);
+            Rights = jsonObject.optInt("Rights");
+        }
+
+        return Rights;
     }
 }

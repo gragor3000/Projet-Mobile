@@ -29,7 +29,6 @@
             android:layout_height="wrap_content"
             android:drawSelectorOnTop="false"
             android:listSelector="@android:color/darker_gray"
-            android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true" />
 

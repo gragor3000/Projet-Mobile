@@ -151,7 +151,7 @@ public class MealsListFragment {
     //renvoie le prix d'un repas en particulier
     public String getPrix(int iRepas){
 
-        return (String)MenuResto.get(iRepas)[1];
+        return (String)MenuResto.get(iRepas)[1] + "$";
     }
 
     //renvoie la reduction d'un repas en particulier

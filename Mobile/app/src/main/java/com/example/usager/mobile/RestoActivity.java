@@ -51,6 +51,10 @@ public class RestoActivity extends AppCompatActivity
     private final OkHttpClient client = new OkHttpClient();
     private String result = "";
     private String cityResult = "";
+    private String ProcName = "";
+    private String cityName = "";
+    private String restoName = "";
+    private String RestoResult = "";
     public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
 
     @Override
@@ -120,7 +124,13 @@ public class RestoActivity extends AppCompatActivity
             e.printStackTrace();
         }
         try {
-            cityResult = GetCities("http://projetdeweb.azurewebsites.net/api/Cities/getCities","1");
+            cityResult = GetWithPost("http://projetdeweb.azurewebsites.net/api/Cities/getCities", "1");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            RestoResult = GetWithPost("http://projetdeweb.azurewebsites.net/api/Restaurants/getRestaurants", "1");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -155,30 +165,29 @@ public class RestoActivity extends AppCompatActivity
         provinceSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                Toast.makeText(getApplicationContext(), "change", Toast.LENGTH_LONG).show();
-                String ProcName =  provinceSpinner.getSelectedItem().toString();
+                ProcName = provinceSpinner.getSelectedItem().toString();
                 try {
                     //va chercher l'id de la province
                     int procId = 1;
-                    for (int i = 0; i< Shared.provinces.size();i++)
-                    {
-                        if(Shared.provinces.get(i) == ProcName)
-                        {
+                    for (int i = 0; i < Shared.provinces.size(); i++) {
+                        if (Shared.provinces.get(i) == ProcName) {
                             procId = Shared.provincesID.get(i);
                         }
                     }
                     //va chercher les villes de la province
-                    cityResult = GetCities("http://projetdeweb.azurewebsites.net/api/Cities/getCities", Integer.toString(procId));
+                    cityResult = GetWithPost("http://projetdeweb.azurewebsites.net/api/Cities/getCities", Integer.toString(procId));
                     try {
                         cityResult.trim();
                         cityResult = cityResult.substring(1, cityResult.length() - 1);
                         cityResult = cityResult.replace("\\", "");
                         JSONArray jsonArray = new JSONArray(cityResult);
+                        //ajoute les noms et les id des villes
                         for (int i = 0; i < jsonArray.length(); i++) {
                             JSONObject jsonObject = jsonArray.getJSONObject(i);
                             Shared.cities.add(jsonObject.optString("Name"));
-
+                            Shared.citiesID.add(jsonObject.optInt("ID"));
                         }
+
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -195,8 +204,7 @@ public class RestoActivity extends AppCompatActivity
         });
 
 
-
-        Spinner citySpinner = (Spinner) findViewById(R.id.spCity);
+        final Spinner citySpinner = (Spinner) findViewById(R.id.spCity);
         //ajoute des villes dans spinner
         ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(
                 this, android.R.layout.simple_spinner_item, Shared.cities);
@@ -209,21 +217,46 @@ public class RestoActivity extends AppCompatActivity
         //le onChange du Spinner de ville
         citySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
-            Spinner restoSpinner = (Spinner) findViewById(R.id.spResto);
-
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                restoSpinner.setVisibility(View.VISIBLE);
+                cityName = citySpinner.getSelectedItem().toString();
+                try {
+                    //va chercher l'id de la province
+                    int cityId = 1;
+                    for (int i = 0; i < Shared.cities.size(); i++) {
+                        if (Shared.cities.get(i) == cityName) {
+                            cityId = Shared.citiesID.get(i);
+                        }
+                    }
+                    //va chercher les villes de la province
+                    RestoResult = GetWithPost("http://projetdeweb.azurewebsites.net/api/Restaurants/getRestaurants", Integer.toString(cityId));
+                    try {
+                        RestoResult.trim();
+                        RestoResult = RestoResult.substring(1, RestoResult.length() - 1);
+                        RestoResult = RestoResult.replace("\\", "");
+                        JSONArray jsonArray = new JSONArray(RestoResult);
+                        //ajoute les noms et les id des villes
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject jsonObject = jsonArray.getJSONObject(i);
+                            Shared.restos.add(jsonObject.optString("Name"));
+                            Shared.restosID.add(jsonObject.optInt("ID"));
+                        }
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parentView) {
-                restoSpinner.setVisibility(View.INVISIBLE);
             }
 
         });
 
-        /*Spinner restoSpinner = (Spinner) findViewById(R.id.spResto);
+        Spinner restoSpinner = (Spinner) findViewById(R.id.spResto);
 
         //ajoute des provinces random dans la liste pour teste
         ArrayAdapter<String> adapter3 = new ArrayAdapter<String>(
@@ -231,8 +264,7 @@ public class RestoActivity extends AppCompatActivity
 
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-        restoSpinner.setAdapter(adapter3);*/
-
+        restoSpinner.setAdapter(adapter3);
 
     }
 
@@ -243,39 +275,39 @@ public class RestoActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-       if (id == R.id.nav_connect) {
-           //Ouvre l'activité pour permettre de se connecter
-           Intent ActivConnect = new Intent(getApplicationContext(),
-                   com.example.usager.mobile.LoginActivity.class);
-           startActivity(ActivConnect);
+        if (id == R.id.nav_connect) {
+            //Ouvre l'activité pour permettre de se connecter
+            Intent ActivConnect = new Intent(getApplicationContext(),
+                    com.example.usager.mobile.LoginActivity.class);
+            startActivity(ActivConnect);
 
         } else if (id == R.id.nav_disconnect) {
-           //Je sais pas quoi mettre
+            //Je sais pas quoi mettre
 
-        }else if (id == R.id.nav_choixResto) {
-           //Ouvre l'activité pour choisir un restaurant
-           Intent ActivResto = new Intent(getApplicationContext(),
-                   com.example.usager.mobile.RestoActivity.class);
-           startActivity(ActivResto);
+        } else if (id == R.id.nav_choixResto) {
+            //Ouvre l'activité pour choisir un restaurant
+            Intent ActivResto = new Intent(getApplicationContext(),
+                    com.example.usager.mobile.RestoActivity.class);
+            startActivity(ActivResto);
 
         } else if (id == R.id.nav_voirMenu) {
-           //Ouvre l'activité pour voir les détail du menu
-           Intent ActivMenu = new Intent(getApplicationContext(),
-                   com.example.usager.mobile.MealListActivity.class);
-           startActivity(ActivMenu);
+            //Ouvre l'activité pour voir les détail du menu
+            Intent ActivMenu = new Intent(getApplicationContext(),
+                    com.example.usager.mobile.MealListActivity.class);
+            startActivity(ActivMenu);
 
         } else if (id == R.id.nav_voirCommande) {
-           //Ouvre l'activité pour voir les détail du menu
-           Intent ActivCommander = new Intent(getApplicationContext(),
-                   com.example.usager.mobile.OrderActivity.class);
-           startActivity(ActivCommander);
+            //Ouvre l'activité pour voir les détail du menu
+            Intent ActivCommander = new Intent(getApplicationContext(),
+                    com.example.usager.mobile.OrderActivity.class);
+            startActivity(ActivCommander);
 
         } else if (id == R.id.nav_facture) {
-           //Ouvre l'activité pour voir les détail du menu
-           Intent ActivFacture = new Intent(getApplicationContext(),
-                   com.example.usager.mobile.PayBillActivity.class);
-           startActivity(ActivFacture);
-       }
+            //Ouvre l'activité pour voir les détail du menu
+            Intent ActivFacture = new Intent(getApplicationContext(),
+                    com.example.usager.mobile.PayBillActivity.class);
+            startActivity(ActivFacture);
+        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
@@ -303,7 +335,7 @@ public class RestoActivity extends AppCompatActivity
     }
 
     //get la ville de la province choisi
-    public String GetCities(String url,String ID) throws IOException {
+    public String GetWithPost(String url, String ID) throws IOException {
         RequestBody formBody = new FormBody.Builder()
                 .add("ID", ID)
                 .build();
@@ -314,27 +346,21 @@ public class RestoActivity extends AppCompatActivity
 
         Response response = client.newCall(request).execute();
         if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
-
-        //System.out.println(response.body().string());
-
+        
         return response.body().string();
     }
 
-    //get le resto de la ville choisi
-    public String GetResto() throws IOException {
-        RequestBody formBody = new FormBody.Builder()
-                .add("search", "Jurassic Park")
-                .build();
-        Request request = new Request.Builder()
-                .url("https://en.wikipedia.org/w/index.php")
-                .post(formBody)
-                .build();
-
-        Response response = client.newCall(request).execute();
-        if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
-
-        System.out.println(response.body().string());
-
-        return response.body().string();
+    //confirmation du choix de restaurant
+    public void ChooseRestoClick()
+    {
+        Spinner restoSpinner = (Spinner) findViewById(R.id.spResto);
+        restoName = restoSpinner.getSelectedItem().toString();
+        //va chercher l'id du resto
+        for (int i = 0; i < Shared.restos.size(); i++) {
+            if (Shared.restos.get(i) == restoName) {
+                Shared.restoID = Shared.restosID.get(i);
+            }
+        }
     }
+
 }

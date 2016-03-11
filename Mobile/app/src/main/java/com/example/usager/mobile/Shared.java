@@ -26,7 +26,9 @@ public class Shared {
     public static List<String> provinces = new ArrayList<String>();
     public static List<Integer> provincesID = new ArrayList<Integer>();
     public static List<String> cities = new ArrayList<String>();
+    public static List<Integer> citiesID = new ArrayList<Integer>();
     public static List<String> restos = new ArrayList<String>();
+    public static List<Integer> restosID = new ArrayList<Integer>();
 
     public static String UserMatch() throws IOException {
         if (android.os.Build.VERSION.SDK_INT > 9) {

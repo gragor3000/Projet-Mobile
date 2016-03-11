@@ -96,7 +96,8 @@
                             android:layout_alignParentBottom="true"
                             android:layout_centerHorizontal="true"
                             android:layout_gravity="center_horizontal"
-                            android:text="@string/Resto_Btn" />
+                            android:text="@string/Resto_Btn"
+                            android:onClick="ChooseRestoClick" />
                     </RelativeLayout>
                 </LinearLayout>
             </LinearLayout>

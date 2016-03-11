@@ -49,6 +49,9 @@ public class Shared {
                 .build();
 
         Response response = client.newCall(request).execute();
+        if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
+
+        System.out.println(response.body().string());
 
         return response.body().string();
     }

@@ -64,7 +64,7 @@ public class LoginActivity extends AppCompatActivity
         } else if (id == R.id.nav_disconnect) {
             //Je sais pas quoi mettre
 
-        }else if (id == R.id.nav_choixResto) {
+        } else if (id == R.id.nav_choixResto) {
             //Ouvre l'activité pour choisir un restaurant
             Intent ActivResto = new Intent(getApplicationContext(),
                     com.example.usager.mobile.RestoActivity.class);
@@ -95,15 +95,22 @@ public class LoginActivity extends AppCompatActivity
     }
 
     //se log et load la page de choix de resto
-    public void SignInClick(View v) throws IOException {
+    public int SignInClick(View v) throws IOException {
         Shared.username = new String();
         Shared.username = "jonathanclavetg@gmail.com";
         Shared.password = new String();
         Shared.password = "123";
-        String test = Shared.UserMatch();
-        Toast.makeText(getApplicationContext(), test, Toast.LENGTH_LONG);
+        String test = "";
+        try {
+            test = Shared.UserMatch();
+            //test contient du JSON "{"Rights":3}"
+            return Integer.parseInt(test);
+        } catch (Exception ex) { }
         //Intent Activity = new Intent(this, RestoActivity.class);
         //startActivity(Activity);
+
+        Toast.makeText(getApplicationContext(), test,Toast.LENGTH_LONG).show();
+        return -1;
     }
 
     public void SignUpClick(View v) {

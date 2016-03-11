@@ -132,7 +132,7 @@ public class OrderActivity extends AppCompatActivity
                 BtnWaiter.setBackgroundColor(0x009933);
             }
         });
-        /*Fin de l'écoute du bouton ajouter*/
+        /*Fin de l'écoute du bouton Call serveur*/
 
         /*Crée l'écoute pour le bouton Next*/
         Button BtnNext = (Button) findViewById(R.id.NextBtn);
@@ -232,7 +232,7 @@ public class OrderActivity extends AppCompatActivity
     private void AfficherPrixTotal(){
         TextView TxtTotal = (TextView) findViewById(R.id.BillTotal);
 
-        TxtTotal.setText(VueRepas.getTotal(listCommande));
+        TxtTotal.setText(VueRepas.getSubTotal(listCommande));
     }
 
 

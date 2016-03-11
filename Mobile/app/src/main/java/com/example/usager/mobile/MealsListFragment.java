@@ -83,7 +83,7 @@ public class MealsListFragment {
         for (int i = 0; i < 31; i++) {
             Object[] temp = new Object[3];
             temp[0] = "Name "+Integer.toString(i);
-            temp[1] = "Price "+Integer.toString(i);
+            temp[1] = Double.toString(Math.random() * 100).substring(0,5);
             temp[2] = "Desc "+Integer.toString(i);
             MenuResto.add(temp);
             //Shared.provinces.add(jsonObject.optString("Name"));
@@ -162,7 +162,7 @@ public class MealsListFragment {
     }
 
     //Renvoie le total que devra débourser l'usager
-    public String getTotal(ArrayList<HashMap<String, String>> LstCommande){
+    public String getSubTotal(ArrayList<HashMap<String, String>> LstCommande){
 
         float PrixTotal = 0.0f;         //Contient le total de la facture
 
@@ -176,6 +176,24 @@ public class MealsListFragment {
         return ("Total : " + String.valueOf(PrixTotal) + "$");
     }
 
+    //Renvoie le total que devra débourser l'usager
+    public String getTotal(ArrayList<HashMap<String, String>> LstCommande){
+
+        float PrixTotal = 0.0f;         //Contient le total de la facture
+
+        //Pour tout les repas commandé, additionner le cout au cout total
+        for(int iCommande = 0; iCommande < LstCommande.size(); iCommande++){
+            int iFois = Integer.parseInt(LstCommande.get(iCommande).get(SECOND_COLUMN));
+            Float iPrix = getPrix(LstCommande.get(iCommande).get(FIRST_COLUMN));
+            PrixTotal += (iFois * iPrix);
+        }
+
+        //Calcule le total en ajoutant la TPS et TVQ
+        PrixTotal = PrixTotal + (PrixTotal * 0.05f) + (PrixTotal * 0.09975f);
+
+        return ("Total : " + String.valueOf(PrixTotal).substring(0,5) + "$");
+    }
+
 
     //Trouve le prix d'un élément dans la liste grace au nom
     private float getPrix (String NomRepas){
@@ -187,8 +205,8 @@ public class MealsListFragment {
         while (fPrix == 0.0f){
             //Si on trouve l'élément qu'on cherche
             if(MenuResto.get(iRepas)[0] == NomRepas){
-                String StrPrix = (String)MenuResto.get(iRepas)[2];
-                fPrix = Float.parseFloat(StrPrix.substring(0, StrPrix.length()-1));
+                String StrPrix = ((String)MenuResto.get(iRepas)[1]).substring(0,5);
+                fPrix = Float.parseFloat(StrPrix);
             }
             else{
                 iRepas++;

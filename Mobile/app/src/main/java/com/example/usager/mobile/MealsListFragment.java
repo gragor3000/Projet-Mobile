@@ -46,7 +46,7 @@ public class MealsListFragment {
     //Constructeur du fragment qui instancie le menu du restaurant
     public MealsListFragment(){
         MenuResto = new ArrayList<Object[]>();
-        /*if (android.os.Build.VERSION.SDK_INT > 9) {
+        if (android.os.Build.VERSION.SDK_INT > 9) {
 
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
 
@@ -57,7 +57,7 @@ public class MealsListFragment {
 
         //va chercher les provinces de l'api
         try {
-            result = GetMenu("http://localhost:52987/api/Meals/getMeals");
+            result = GetMenuPost("http://projetdeweb.azurewebsites.net/api/Meals/getMeals", "1");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -66,7 +66,9 @@ public class MealsListFragment {
         try {
             result.trim();
             result = result.substring(1, result.length() - 1);
-            result = result.replace("\\", "");
+            result = result.replace("\r\n", "");
+            result = result.replace("\", "");
+                    result = result.replace("rn", "");
             JSONArray jsonArray = new JSONArray(result);
             for (int i = 0; i < jsonArray.length(); i++) {
                 Object[] temp = new Object[3];
@@ -74,12 +76,14 @@ public class MealsListFragment {
                 temp[0] = jsonObject.optString("Name");
                 temp[1] = jsonObject.optString("Price");
                 temp[2] = jsonObject.optString("Desc");
+                MenuResto.add(temp);
                 //Shared.provinces.add(jsonObject.optString("Name"));
             }
         } catch (JSONException e) {
             e.printStackTrace();
-        }*/
+        }
 
+        /*
         for (int i = 0; i < 31; i++) {
             Object[] temp = new Object[3];
             temp[0] = "Name "+Integer.toString(i);
@@ -87,7 +91,7 @@ public class MealsListFragment {
             temp[2] = "Desc "+Integer.toString(i);
             MenuResto.add(temp);
             //Shared.provinces.add(jsonObject.optString("Name"));
-        }
+        }*/
     }
 
 

@@ -35,6 +35,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -319,9 +320,20 @@ public class SignUpActivity extends AppCompatActivity implements LoaderCallbacks
             // perform the user login attempt.
             showProgress(true);
             //TODO: Ajouter dans la BD
+            String answer = "-1";
             try {
-                SignUpDB(firstName, lastName, password, email, birthDate, postalCode, dogName);
+                answer = SignUpDB(firstName, lastName, password, email, birthDate, postalCode, dogName);
             } catch (Exception ex) {
+                Toast.makeText(getApplicationContext(), ex.getMessage(),Toast.LENGTH_LONG).show();
+            }
+            if(answer != "-1") {
+                Intent Activity = new Intent(this, LoginActivity.class);
+                startActivity(Activity);
+            }
+            else
+            {
+                String errorMsg = getApplicationContext().getResources().getString(R.string.error_with_query);
+                Toast.makeText(getApplicationContext(), errorMsg,Toast.LENGTH_LONG).show();
             }
         }
             /*

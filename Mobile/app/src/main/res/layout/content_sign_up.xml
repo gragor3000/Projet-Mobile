@@ -7,11 +7,7 @@
     android:fitsSystemWindows="true"
     tools:context="com.example.usager.mobile.SignUpActivity">
 
-    <include
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        layout="@layout/toolbar_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
@@ -24,6 +20,12 @@
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/activity_vertical_margin"
         tools:context="com.example.usager.mobile.SignUpActivity">
+
+        <include
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            layout="@layout/toolbar_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
 
         <!-- Login progress -->
@@ -38,7 +40,8 @@
         <ScrollView
             android:id="@+id/login_form"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="478dp"
+            android:weightSum="1">
 
             <LinearLayout
                 android:id="@+id/email_login_form"

@@ -9,6 +9,7 @@
     <string name="error_invalid_password">ce mot de passe est trop court</string>
     <string name="error_incorrect_password">ce mot de passe est invalide</string>
     <string name="error_field_required">ce champs est obligatoire</string>
+    <string name="error_with_query">Une erreure cest produite lors de votre requete</string>
     <string name="Login_SignIn">Se Connecter</string>
     <string name="Login_Connect">Veuillez vous connectez</string>
     <string name="Login_Create">Créer un compte</string>

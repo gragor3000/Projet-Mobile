@@ -323,9 +323,10 @@ public class SignUpActivity extends AppCompatActivity implements LoaderCallbacks
             String answer = "-1";
             try {
                 answer = SignUpDB(firstName, lastName, password, email, birthDate, postalCode, dogName);
-            } catch (Exception ex) {
-                Toast.makeText(getApplicationContext(), ex.getMessage(),Toast.LENGTH_LONG).show();
             }
+            catch (Exception ex)
+            { }
+
             if(answer != "-1") {
                 Intent Activity = new Intent(this, LoginActivity.class);
                 startActivity(Activity);

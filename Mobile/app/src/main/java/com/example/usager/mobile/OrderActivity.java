@@ -158,6 +158,7 @@ public class OrderActivity extends AppCompatActivity
                     //Ouvre l'activité pour payé une facture
                     Intent ActivBill = new Intent(getApplicationContext(),
                                                   com.example.usager.mobile.PayBillActivity.class);
+                    ActivBill.putExtra("MontantTotal", VueRepas.getTotal(listCommande));
                     startActivity(ActivBill);
                 }
             }

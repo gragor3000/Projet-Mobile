@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.braintreepayments.api.BraintreeFragment;
@@ -35,8 +36,6 @@ import java.math.BigDecimal;
 
 public class PayBillActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-
-    MealsListFragment VueRepas;                         //Lien vers MealsListFragment
 
     private static final String CONFIG_ENVIRONMENT = com.paypal.android.sdk.payments.PayPalConfiguration.ENVIRONMENT_NO_NETWORK;
 
@@ -60,7 +59,13 @@ public class PayBillActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pay_bill);
 
-        VueRepas = new MealsListFragment();
+        //Récupère les informations envoyer par la page qui la invoquer
+        Bundle invocation = getIntent().getExtras();
+
+        //Récupère les information du plat est les affiche
+        //Le nom du plat
+        TextView TxtTotal = (TextView) findViewById(R.id.txtTotal);
+        TxtTotal.setText(invocation.getString("MontantTotal"));
 
         //TOOLBAR ET NAVIGATIONDRAWER
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -77,11 +82,6 @@ public class PayBillActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         getSupportActionBar().setHomeButtonEnabled(true);
-
-        /*Remplie la liste avec tout les repas*/
-        ListView listView = (ListView) findViewById(R.id.menu);
-        ListViewAdapter adapter = new ListViewAdapter(this, VueRepas.getMenu());
-        listView.setAdapter(adapter);
 
         //PAYPAL
         Intent intent = new Intent(this, PayPalService.class);

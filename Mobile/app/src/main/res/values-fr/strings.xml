@@ -56,6 +56,7 @@
     <string name="SignUp_Dog_Name">Nom du chien</string>
 
     <string name="title_activity_payer_commande">Payer la commande</string>
+    <string name="Bill_Label"> Prix total </string>
 
     <string name="action_settings">Configuration</string>
 </resources>

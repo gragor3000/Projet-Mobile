@@ -58,5 +58,7 @@
     <string name="Resto_Resto"> Restaurant </string>
     <string name="Resto_Btn"> Confirm </string>
 
+    <string name="Bill_Label"> Total price </string>
+
 
 </resources>

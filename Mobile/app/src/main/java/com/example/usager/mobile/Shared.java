@@ -24,6 +24,7 @@ public class Shared {
     public static final String SECOND_COLUMN = "Second";
 
     public static List<String> provinces = new ArrayList<String>();
+    public static List<Integer> provincesID = new ArrayList<Integer>();
     public static List<String> cities = new ArrayList<String>();
     public static List<String> restos = new ArrayList<String>();
 

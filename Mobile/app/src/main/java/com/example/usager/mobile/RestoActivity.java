@@ -119,9 +119,8 @@ public class RestoActivity extends AppCompatActivity
         } catch (Exception e) {
             e.printStackTrace();
         }
-        String test = "";
         try {
-            cityResult = GetCities("http://projetwebmobile.azurewebsites.net/api/Cities/GetCities","1");
+            cityResult = GetCities("http://projetdeweb.azurewebsites.net/api/Cities/getCities","1");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -135,13 +134,14 @@ public class RestoActivity extends AppCompatActivity
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                 Shared.provinces.add(jsonObject.optString("Name"));
+                Shared.provincesID.add(jsonObject.optInt("ID"));
 
             }
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-        Spinner provinceSpinner = (Spinner) findViewById(R.id.spProvince);
+        final Spinner provinceSpinner = (Spinner) findViewById(R.id.spProvince);
         //ajoute les provinces dans spinner
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(
                 this, android.R.layout.simple_spinner_item, Shared.provinces);
@@ -150,16 +150,38 @@ public class RestoActivity extends AppCompatActivity
 
         provinceSpinner.setAdapter(adapter);
 
+
         //le onChange du Spinner de province
         provinceSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
-            Spinner villeSpinner = (Spinner) findViewById(R.id.spCity);
-
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                Toast.makeText(getApplicationContext(),"change",Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "change", Toast.LENGTH_LONG).show();
+                String ProcName =  provinceSpinner.getSelectedItem().toString();
                 try {
-                    GetCities("http://projetdeweb.azurewebsites.net/api/Cities/getCities", "1");
+                    //va chercher l'id de la province
+                    int procId = 1;
+                    for (int i = 0; i< Shared.provinces.size();i++)
+                    {
+                        if(Shared.provinces.get(i) == ProcName)
+                        {
+                            procId = Shared.provincesID.get(i);
+                        }
+                    }
+                    //va chercher les villes de la province
+                    cityResult = GetCities("http://projetdeweb.azurewebsites.net/api/Cities/getCities", Integer.toString(procId));
+                    try {
+                        cityResult.trim();
+                        cityResult = cityResult.substring(1, cityResult.length() - 1);
+                        cityResult = cityResult.replace("\\", "");
+                        JSONArray jsonArray = new JSONArray(cityResult);
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject jsonObject = jsonArray.getJSONObject(i);
+                            Shared.cities.add(jsonObject.optString("Name"));
+
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -172,19 +194,7 @@ public class RestoActivity extends AppCompatActivity
 
         });
 
-        try {
-            cityResult.trim();
-            cityResult = cityResult.substring(1, cityResult.length() - 1);
-            cityResult = cityResult.replace("\\", "");
-            JSONArray jsonArray = new JSONArray(cityResult);
-            for (int i = 0; i < jsonArray.length(); i++) {
-                JSONObject jsonObject = jsonArray.getJSONObject(i);
-                Shared.cities.add(jsonObject.optString("Name"));
 
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
 
         Spinner citySpinner = (Spinner) findViewById(R.id.spCity);
         //ajoute des villes dans spinner
@@ -213,7 +223,7 @@ public class RestoActivity extends AppCompatActivity
 
         });
 
-        Spinner restoSpinner = (Spinner) findViewById(R.id.spResto);
+        /*Spinner restoSpinner = (Spinner) findViewById(R.id.spResto);
 
         //ajoute des provinces random dans la liste pour teste
         ArrayAdapter<String> adapter3 = new ArrayAdapter<String>(
@@ -221,7 +231,7 @@ public class RestoActivity extends AppCompatActivity
 
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-        restoSpinner.setAdapter(adapter3);
+        restoSpinner.setAdapter(adapter3);*/
 
 
     }
@@ -305,7 +315,7 @@ public class RestoActivity extends AppCompatActivity
         Response response = client.newCall(request).execute();
         if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
 
-        System.out.println(response.body().string());
+        //System.out.println(response.body().string());
 
         return response.body().string();
     }

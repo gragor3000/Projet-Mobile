@@ -115,7 +115,7 @@ public class PayBillActivity extends AppCompatActivity
 
     //juste un item
     private PayPalPayment getThingToBuy(String paymentIntent) {
-        return new PayPalPayment(new BigDecimal("1.75"), "USD", "sample item",
+        return new PayPalPayment(new BigDecimal("1.75"), "CAD", "sample item",
                 paymentIntent);
     }
 

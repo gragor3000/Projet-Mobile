@@ -228,7 +228,7 @@ public class MealsListFragment {
         while (fPrix == 0.0f){
             //Si on trouve l'élément qu'on cherche
             if(MenuResto.get(iRepas)[0] == NomRepas){
-                String StrPrix = ((String)MenuResto.get(iRepas)[1]).substring(0,5);
+                String StrPrix = (String)MenuResto.get(iRepas)[1];
                 fPrix = Float.parseFloat(StrPrix);
             }
             else{

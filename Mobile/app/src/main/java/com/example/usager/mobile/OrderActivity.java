@@ -7,6 +7,7 @@ import android.app.ListFragment;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.StrictMode;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -32,11 +33,22 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.sql.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.zip.Inflater;
+
+import okhttp3.FormBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 public class OrderActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -45,6 +57,8 @@ public class OrderActivity extends AppCompatActivity
     private ArrayList<HashMap<String, String>> listCommande;
     private int iRepasSelect = -1;                       //Contient l'indice du repas sélectionner
     MealsListFragment VueRepas;                         //Lien vers MealsListFragment
+    private final OkHttpClient client = new OkHttpClient();
+    private String result = "";
 
 
     /******************************************************************
@@ -143,7 +157,23 @@ public class OrderActivity extends AppCompatActivity
                 //Si on appuie sur le boutton lorsqu'il est en mode "Commander", passer au prochain mode
                 if (((Button) vue).getText().toString().equalsIgnoreCase(getString(R.string.Order_Next))) {
 
-                    //Envoyer la commande sur le serveur web
+                    //EnvoyerCommande
+
+                    /*if (android.os.Build.VERSION.SDK_INT > 9) {
+
+                        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
+
+                                .permitAll().build();
+
+                        StrictMode.setThreadPolicy(policy);
+                    }
+
+                    //va chercher les provinces de l'api
+                    try {
+                        result = EnvoyerCommande("http://projetdeweb.azurewebsites.net/api/Orders/CreateOrder", "1", "Plus de bacon", "1Pizza10...");
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }*/
 
                     //Shared.billID = indice de facture
 
@@ -335,5 +365,24 @@ public class OrderActivity extends AppCompatActivity
             }
         }
         return !DejaAjouter;
+    }
+
+    public String EnvoyerCommande(String url,String ID, String comment, String meals) throws IOException {
+        RequestBody formBody = new FormBody.Builder()
+                .add("ClientID", ID)
+                .add("Comment", comment)
+                .add("LstMeals", meals)
+                .build();
+        Request request = new Request.Builder()
+                .url(url)
+                .post(formBody)
+                .build();
+
+        Response response = client.newCall(request).execute();
+        if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
+
+        //System.out.println(response.body().string());
+
+        return response.body().string();
     }
 }

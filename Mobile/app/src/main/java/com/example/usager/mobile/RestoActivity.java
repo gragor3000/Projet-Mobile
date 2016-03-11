@@ -49,12 +49,12 @@ public class RestoActivity extends AppCompatActivity
 
     //client pour post pi get des données dans BD
     private final OkHttpClient client = new OkHttpClient();
-    private String result = "";
-    private String cityResult = "";
-    private String ProcName = "";
-    private String cityName = "";
-    private String restoName = "";
-    private String RestoResult = "";
+    private String result = "";//résultat de province
+    private String cityResult = "";//résulat de ville
+    private String ProcName = "";//nom de la province choisi
+    private String cityName = "";//nom de la ville choisi
+    private String restoName = "";//nom du resto choisi
+    private String RestoResult = "";//résultat des restaurants
     public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
 
     @Override
@@ -136,7 +136,7 @@ public class RestoActivity extends AppCompatActivity
         }
 
 
-        try {
+        try {//ajoute les provinces dans une liste
             result.trim();
             result = result.substring(1, result.length() - 1);
             result = result.replace("\\", "");

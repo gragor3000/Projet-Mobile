@@ -26,9 +26,11 @@ import java.util.List;
 import java.util.Objects;
 import java.util.zip.Inflater;
 
+import okhttp3.FormBody;
 import okhttp3.Headers;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
 
 import static com.example.usager.mobile.Shared.FIRST_COLUMN;
@@ -67,7 +69,7 @@ public class MealsListFragment {
             result.trim();
             result = result.substring(1, result.length() - 1);
             result = result.replace("\r\n", "");
-            result = result.replace("\", "");
+            result = result.replace("\\", "");
                     result = result.replace("rn", "");
             JSONArray jsonArray = new JSONArray(result);
             for (int i = 0; i < jsonArray.length(); i++) {
@@ -92,6 +94,23 @@ public class MealsListFragment {
             MenuResto.add(temp);
             //Shared.provinces.add(jsonObject.optString("Name"));
         }*/
+    }
+
+    public String GetMenuPost(String url,String ID) throws IOException {
+        RequestBody formBody = new FormBody.Builder()
+                .add("ID", ID)
+                .build();
+        Request request = new Request.Builder()
+                .url(url)
+                .post(formBody)
+                .build();
+
+        Response response = client.newCall(request).execute();
+        if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
+
+        //System.out.println(response.body().string());
+
+        return response.body().string();
     }
 
 

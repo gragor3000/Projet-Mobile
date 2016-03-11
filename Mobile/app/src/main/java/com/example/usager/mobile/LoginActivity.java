@@ -1,5 +1,6 @@
 package com.example.usager.mobile;
 
+import android.app.Application;
 import android.content.Intent;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -11,6 +12,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
+
+import java.io.IOException;
 
 import okhttp3.OkHttpClient;
 
@@ -91,10 +95,15 @@ public class LoginActivity extends AppCompatActivity
     }
 
     //se log et load la page de choix de resto
-    public void SignInClick(View v) {
-        Intent Activity = new Intent(this, RestoActivity.class);
-        startActivity(Activity);
-
+    public void SignInClick(View v) throws IOException {
+        Shared.username = new String();
+        Shared.username = "jonathanclavetg@gmail.com";
+        Shared.password = new String();
+        Shared.password = "123";
+        String test = Shared.UserMatch();
+        Toast.makeText(getApplicationContext(), test, Toast.LENGTH_LONG);
+        //Intent Activity = new Intent(this, RestoActivity.class);
+        //startActivity(Activity);
     }
 
     public void SignUpClick(View v) {

@@ -24,6 +24,7 @@ import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
+import java.util.regex.Pattern;
 import java.util.zip.Inflater;
 
 import okhttp3.FormBody;
@@ -76,7 +77,7 @@ public class MealsListFragment {
                 Object[] temp = new Object[3];
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                 temp[0] = jsonObject.optString("Name");
-                temp[1] = jsonObject.optString("Price");
+                temp[1] = parsePrix(jsonObject.optString("Price"));
                 temp[2] = jsonObject.optString("Desc");
                 MenuResto.add(temp);
                 //Shared.provinces.add(jsonObject.optString("Name"));
@@ -196,7 +197,7 @@ public class MealsListFragment {
             PrixTotal += (iFois * iPrix);
         }
 
-        return ("Total : " + String.valueOf(PrixTotal) + "$");
+        return ("Total : " + parsePrix(String.valueOf(PrixTotal)) + "$");
     }
 
     //Renvoie le total que devra débourser l'usager
@@ -214,7 +215,19 @@ public class MealsListFragment {
         //Calcule le total en ajoutant la TPS et TVQ
         PrixTotal = PrixTotal + (PrixTotal * 0.05f) + (PrixTotal * 0.09975f);
 
-        return ("Total : " + String.valueOf(PrixTotal).substring(0,5) + "$");
+        return ("Total : " + parsePrix(String.valueOf(PrixTotal)) + "$");
+    }
+
+    //Transforme un string pour qu'il ait l'apparence d'une valeur monétaire
+    private String parsePrix(String pprix){
+
+        String[] TblPrix = pprix.split(Pattern.quote("."));
+
+        if(TblPrix[1].length() < 2){
+            TblPrix[1] = TblPrix[1] + "0";
+        }
+
+        return TblPrix[0] + "." + TblPrix[1].substring(0,2);
     }
 
 

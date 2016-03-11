@@ -342,6 +342,8 @@ public class SignUpActivity extends AppCompatActivity implements LoaderCallbacks
             mAuthTask.execute((Void) null);
             */
     }
+
+    //envoie les informations a la BD pour creer un compte
     private String SignUpDB(String firstName, String lastName, String pw, String Email, String birthDate, String postalCode, String dogName) throws IOException {
         RequestBody formBody = new FormBody.Builder()
                 .add("firstName", firstName)

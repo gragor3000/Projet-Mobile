@@ -113,6 +113,7 @@ public class LoginActivity extends AppCompatActivity
         return -1;
     }
 
+    //appel la page d'inscription
     public void SignUpClick(View v) {
         Intent Activity = new Intent(this, SignUpActivity.class);
         startActivity(Activity);
